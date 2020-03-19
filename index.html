@@ -4,11 +4,12 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Neon Glow - Bootstrap Theme</title>
+    <title>FeDEX - website</title>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     
     <link rel="stylesheet" href="css/bootstrap4-neon-glow.min.css">
+    <link rel="stylesheet" href="css/bootstrap4-neon-glow.css">
     
     
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -25,9 +26,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a href="index.html" class="pl-md-0 p-3 text-light">Start</a>
-            <a href="app.html" class="p-3 text-decoration-none text-light">App example</a>
-            <a href="form.html" class="p-3 text-decoration-none text-light">Form example</a>
+            <a href="index.html" class="pl-md-0 p-3" style="color: white;">HOME</a>
+            <a href="blog.html" class="p-3" style="color: white;">BLOG</a>
+            <a href="about.html" class="p-3" style="color: white;">ABOUT</a>
           </div>
         </div>
       </nav>
@@ -42,40 +43,84 @@
   <div class="container">
       <div class="row">
         <div class="col-xl-6">
-          <h1 class="display-2">Neon Glo<span class="vim-caret">w</span></h1>
-          <div class="lead mb-3 text-mono text-success">This is a starter template with a jumbotron</div>
+          <h1 class="display-2">Fe<span class="vim-caret">DEX</span></h1>
+          <div class="lead mb-3 text-mono text-success">"That's all for now. I hope I managed to prove that exploiting buffer overflows should be an art."</div>
           <div class="text-mono">
-            <a href="#!"
-               title="Download Theme"
-               class="btn btn-success btn-shadow px-3 my-2 ml-0 text-left">
-              A Button
+            <a href="https://github.com/Fineas" class="btn btn-danger btn-shadow px-3 my-2 ml-0 ml-sm-1 text-left">
+              <span class="fab fa-github"></span>
             </a>
-            <a href="#!"
-               class="btn btn-danger btn-shadow px-3 my-2 ml-0 ml-sm-1 text-left">
-              Another Button
+            <a href="https://twitter.com/FetchDEX" class="btn btn-danger btn-shadow px-3 my-2 ml-0 ml-sm-1 text-left">
+              <span class="fab fa-twitter"></span>
+            </a>
+            <a href="https://ctftime.org/user/20927" class="btn btn-danger btn-shadow px-3 my-2 ml-0 ml-sm-1 text-left">
+              <span class="fas fa-flag"></span>
             </a>
           </div>
 
-          <div class="text-darkgrey text-mono my-2">Some muted text</div>
+          <br>
+          <hr style="border-color:gray">
+          <div class="console">
 
-          <p class="mt-5 text-grey text-spacey">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, dignissimos provident. Alias, aliquid, cum cumque deleniti dignissimos eos exercitationem explicabo illum inventore laboriosam nihil nobis nostrum praesentium recusandae sequi, sint!
-          </p>
+              <p class="line1 console_line"><span style="color:#17b06b">fedex@xps:~/hack_the_world$</span> gdb ./binary<span class="cursor1 cursor-type"> _</span></p> 
+              
+              <p class="line2 console_line">GNU gdb (Ubuntu 8.2-0ubuntu1~16.04.1) 8.2</p>
+              <p class="line3 console_line">For help, type "help".</span></p>
+              
+              <p class="line4 console_line"><span style="color:#ff707f">gdb-peda$</span> r<span class="cursor2 cursor-type"> _</span></p>
+
+              <p class="wait_crash console_line"></p>
+
+              <p class="line5 console_line">Starting program: /home/hack_the_world/binary </p>
+              <p class="line6 console_line">> Enter Secret Code: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
+              <p class="line7 console_line">Program received signal SIGSEGV, Segmentation fault.</p>
+              <p class="line8 dump_line crash_dump"><span style="color: #5c94ff">[----------------------------------registers-----------------------------------]</span></p>
+              <p class="line9 dump_line crash_dump"><span style="color: #17b06b">RAX:</span> 0x0 </p>
+              <p class="line10 dump_line crash_dump"><span style="color: #17b06b">RBX:</span> 0x0 </p>
+              <p class="line11 dump_line crash_dump"><span style="color: #17b06b">RCX:</span> <span style="color:#ff707f">0x7f2f402a82c0</span> (<__write_nocancel+7>:	cmp    rax,0xfffffffffffff001)</p>
+              <p class="line12 dump_line crash_dump"><span style="color: #17b06b">RDX:</span> <span style="color: #5c94ff">0x7f2f40577780</span> --> 0x0 </p>
+              <p class="line13 dump_line crash_dump"><span style="color: #17b06b">RSI:</span> <span style="color: #5c94ff">0x7fff3fbe72a0</span> ("Nice to meet you, ", 'A' <repeats 94 times>, "!\n")</p>
+              <p class="line14 dump_line crash_dump"><span style="color: #17b06b">RDI:</span> 0x1 </p>
+              <p class="line15 dump_line crash_dump"><span style="color: #17b06b">RBP:</span> 0x4141414141414141 ('AAAAAAAA')</p>
+              <p class="line16 dump_line crash_dump"><span style="color: #17b06b">RSP:</span> 0x7fff3fbe9958 ('A' <repeats 54 times>)</p>
+              <p class="line17 dump_line crash_dump"><span style="color: #17b06b">RIP:</span> <span style="color:#ff707f">0x4012dd</span> (<main+324>:	ret)</p>
+              <p class="line18 dump_line crash_dump"><span style="color: #17b06b">R8 :</span> <span style="color: #5c94ff">0x7f2f4076c700</span> (0x00007f2f4076c700)</p>
+              <p class="line19 dump_line crash_dump"><span style="color: #17b06b">R9 :</span> 0x72 ('r')</p>
+              <p class="line20 dump_line crash_dump"><span style="color: #17b06b">R10:</span> 0x5e ('^')</p>
+              <p class="line21 dump_line crash_dump"><span style="color: #17b06b">R11:</span> 0x246 </p>
+              <p class="line22 dump_line crash_dump"><span style="color: #17b06b">R12:</span> <span style="color:#ff707f">0x4010a0</span> (<_start>:	endbr64)</p>
+              <p class="line23 dump_line crash_dump"><span style="color: #17b06b">R13:</span> <span style="color: #5c94ff">0x7fff3fbe9a30</span> --> 0x1 </p>
+              <p class="line24 dump_line crash_dump"><span style="color: #17b06b">R14:</span> 0x0 </p>
+              <p class="line25 dump_line crash_dump"><span style="color: #17b06b">R15:</span> 0x0</p>
+              <p class="line26 dump_line crash_dump"><span style="color: #17b06b">EFLAGS:</span> 0x10206 (<span style="color: #17b06b">carry</span> <span style="color:#ff707f">PARITY</span> <span style="color: #17b06b">adjust zero sign trap</span> <span style="color:#ff707f">INTERRUPT</span> <span style="color: #17b06b">direction overflow</span>)</p>
+              <p class="line27 dump_line crash_dump"><span style="color: #5c94ff">[-------------------------------------code-------------------------------------]</span></p>
+              <p class="line28 dump_line crash_dump">  0x4012d2 <main+313>:	<span style="color:#ff707f">call   0x401060 <printf@plt></span></p>
+              <p class="line29 dump_line crash_dump">  0x4012d7 <main+318>:	mov    eax,0x0</p>
+              <p class="line30 dump_line crash_dump">  0x4012dc <main+323>:	leave  </p>
+              <p class="line31 dump_line crash_dump">=> 0x4012dd <main+324>:	<span style="color: #5c94ff">ret</span>    </p>
+              <p class="line32 dump_line crash_dump">  0x4012de:	xchg   ax,ax</p>
+              <p class="line33 dump_line crash_dump">  0x4012e0 <__libc_csu_init>:	endbr64 </p>
+              <p class="line34 dump_line crash_dump">  0x4012e4 <__libc_csu_init+4>:	push   r15</p>
+              <p class="line35 dump_line crash_dump">  0x4012e6 <__libc_csu_init+6>:	lea    r15,[rip+0x2b13]        # 0x403e00</p>
+              <p class="line36 dump_line crash_dump"><span style="color: #5c94ff">[------------------------------------stack-------------------------------------]</span></p>
+              <p class="line37 dump_line crash_dump">0000| <span style="color: #5c94ff">0x7fff3fbe9958</span> ('A' repeats 54 times)</p>
+              <p class="line38 dump_line crash_dump">0008| <span style="color: #5c94ff">0x7fff3fbe9960</span> ('A' repeats 46 times)</p>
+              <p class="line39 dump_line crash_dump">0016| <span style="color: #5c94ff">0x7fff3fbe9968</span> ('A' repeats 38 times)</p>
+              <p class="line40 dump_line crash_dump">0024| <span style="color: #5c94ff">0x7fff3fbe9970</span> ('A' repeats 30 times)</p>
+              <p class="line41 dump_line crash_dump">0032| <span style="color: #5c94ff">0x7fff3fbe9978</span> ('A' repeats 22 times)</p>
+              <p class="line42 dump_line crash_dump">0040| <span style="color: #5c94ff">0x7fff3fbe9980</span> ('A' repeats 14 times)</p>
+              <p class="line43 dump_line crash_dump">0048| <span style="color: #5c94ff">0x7fff3fbe9988</span> --> 0xd500414141414141 </p>
+              <p class="line44 dump_line crash_dump">0056| <span style="color: #5c94ff">0x7fff3fbe9990</span> --> <span style="color:#ff707f">0x4010a0</span> (<_start>:	endbr64)</p>
+              <p class="line45 dump_line crash_dump"><span style="color: #5c94ff">[------------------------------------------------------------------------------]</span></p>
+              <p class="line46 dump_line crash_dump">Legend: <span style="color:#ff707f">code</span>, data, <span style="color: #17b06b">rodata</span>, value</p>
+              <p class="line47 dump_line crash_dump">Stopped reason: <span style="color:#ff707f">SIGSEGV</span></p>
+              <p class="line48 dump_line crash_dump">0x00000000004012dd in main ()</p>
+              <p class="line49 console_line"><span style="color:#ff707f">gdb-peda$</span> <span class="cursor3 cursor-type"> _</span></p>
+          </div>
         </div>
       </div>
   </div>
 </div>
 
-
-
-<div class="container py-5">
-  <h1>Thanks</h1>
-
-  <p>Thank you for downloading this theme. If you have trouble or find a bug, please open an issue on GitHub:<br>
-    <a href="https://github.com/HackerThemes/theme-machine">https://github.com/HackerThemes/theme-machine</a></p>
-
-  
-</div>
 
 
     <!-- Optional JavaScript -->
