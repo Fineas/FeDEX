@@ -80,7 +80,7 @@ The challenge gives us an archive that includes some files to describe the setup
       <!-- DEBUGGING -->
       <h1><i class="fas fa-search"></i> <span style="color:#17b06b">DEBUGGING</span></h1>
       <h5>In order to have access to as much information as possible, and to easily inspect the memory, I will use <code>gdb</code>.</h5>
-      <h5>This is very easy to do: <code>gdb /bin/d8</code>  , but one feature d8 has is <code>--allow-natives-syntax</code>. It gives us access to a wide range of runtime functions including <code>%DebugPrint()</code>.</h5>
+      <h5>This is very easy to do: <code>gdb /bin/d8</code>  , but one features d8 has is called <code>--allow-natives-syntax</code>. It gives us access to a wide range of runtime functions including <code>%DebugPrint()</code>.</h5>
       <h5>This feature is very useful for getting more information about objects.</h5>
       <br>
       <div class="row">
@@ -102,7 +102,7 @@ The challenge gives us an archive that includes some files to describe the setup
             <footer>
               <div class="row">
                 <div class="col-md-6">
-                  <p>Whenever we want to trigger the breakpoint, just call the function:<br>
+                  <p>Whenever you want to trigger the breakpoint, just call the function:<br>
                     <img src="src/p1-call.png" style="width:100%">
                   </p>
                 </div>
@@ -150,7 +150,7 @@ The challenge gives us an archive that includes some files to describe the setup
           ...<br>
         </code>
         <h5>So, by performing <small><code>(0x23eb0820f829-1 + 0x68)-(0x23eb0820f501-1 + 0xc)</code></small> we will get the offset we need <small><code>0x384</code></small>.</h5>
-      <h5>By putting things together, we will get the address that we are interested in. The code sequence described below accomplishes this..</h5>
+      <h5>Putting things together, we will leak the address that we are interested in. The code sequence described below accomplishes this..</h5>
         <br>
         <div class="row">
           <div class="col-lg-6">
@@ -165,7 +165,7 @@ The challenge gives us an archive that includes some files to describe the setup
           <h5 style="color:#ff707f">2. Overwriting the Memory Area</h5>
         <br>
       <h5>Finally, there is only one thing left to do, to overwrite the bytes in the memory area allocated to <code>WASM</code> and execute it.</h5>
-    <h5>Although this at first glance seems rather "straight-forward" (considering the second vulnerability that allows us to overwrite a lot of bytes), it is actually more complicated because the arrays we allocate are not in the same <code>memory block</code> with the bytes we want to overwrite.</h5>
+    <h5>Although this at first glance seems rather "straight-forward" (considering the second vulnerability that allows us to overwrite a lot of bytes), this is actually more complicated because the arrays we allocate are not in the same <code>memory block</code> with the bytes we want to overwrite.</h5>
   <h5>Returning to the source code, we can see that after the parameter checks, the <code>.fill()</code> method is invoked, but the address to which the bytes are written is taken from the property <code>->DataPtr()</code>.</h5>
         <br>
         <div class="row">
@@ -189,9 +189,9 @@ The challenge gives us an archive that includes some files to describe the setup
         <h5>Finally, after overwriting the buffer with <code>shellcode</code>,and invoke the wasm function, we will trigger the <code>shell</code>.</h5>
           <h5>The full script can be found at: <a href="https://github.com/Fineas/Me-CTF/blob/master/Writeups/20-confidence/solve_chromatic.js" style="color:#ff707f">https://github.com/Fineas/Me-CTF/blob/master/Writeups/20-confidence/solve_chromatic.js</a></h5>
         <h1><i class="fas fa-stamp"></i><span style="color:#17b06b"> CONCLUSION</span></h1>
-          <h5>I think this problem is an easy and appropriate one to start in this area.</h5>
+          <h5>I think this problem is easy and appropriate to start in this area.</h5>
           <h5>I hope this article was useful and there were new and interesting things to learn.</h5>
-          <h5>This was my first time writing articles, but I want to continue this, it was a beautiful experience 😄</h5>
+          <h5>This was my first time writing an article, but I want to continue this, it was a beautiful experience 😄</h5>
         <h1><i class="fas fa-apple-alt"></i><span style="color:#17b06b"> RESOURCES</span></h1>
         <ul>
           <li>https://source.chromium.org/chromium/chromium/src/+/master:v8/src/builtins</li>
