@@ -51,40 +51,37 @@
       </h5>
       <br>
       <!-- INTRODUCTION -->
-      <h1><i class="fas fa-info-circle"></i> <span style="color:#17b06b">INTRODUCERE</span></h1>
+      <h1><i class="fas fa-info-circle"></i> <span style="color:#17b06b">INTRODUCTION</span></h1>
       <h5>
-        Cand vine vorba de <code>Browsers</code>, trebuie remarcat faptul ca asemenea <code>Sistemelor de Operare</code>, acestea alcatuiesc o arie vasta ce cuprinde nenumarate <code>Browser Engines</code>. Prin urmare, exploatarea acestora poate lua diverse forme precum: <code>JavaScript Engine Exploitation</code>, <code>DOM Exploitation</code> ...
-In cele ce urmeaza, ne vom opri atentia asupra Exploatarii Enginului de Javascript din Google Chrome numit v8.
-      </h5>
-      <h5>
-        Challenge-ul ne ofera o arhiva care cuprinde niste fisiere pentru a contextualiza setup-ul de pe server, dar cele importante in cazul de fata sunt: <code>patch file (diff.diff)</code>, si executabilul <code>/bin/d8</code> (d8 este numele pentru JavaScript REPL creat de Google pentru v8).
+        When it comes to <code>Browsers</code>, it should be noted that just like <code>Operating Systems</code>, they make up a large area that includes countless <code>Browser Engines</code>. Therefore, their exploitation can take various forms such as: <code>JavaScript Engine Exploitation</code>, <code>DOM Exploitation</code> ... </h5>
+        <h5>In the following writeup, we will focus on exploiting the Javascript Engine in Google Chrome, called v8.</h5>
+        <h5>
+The challenge gives us an archive that includes some files to describe the setup on the remote server, but the important ones in this case are: the patch file <code>(diff.diff)</code>, and the <code>/bin/d8</code> executable (d8 is the name for JavaScript REPL created by Google for v8).
       </h5>
       <!-- EXPLORATION -->
-      <h1><i class="fas fa-code-branch"></i> <span style="color:#17b06b">ANALIZA MODIFICARILOR</span></h1>
+      <h1><i class="fas fa-code-branch"></i> <span style="color:#17b06b">PATCH ANALYSIS</span></h1>
       <h5>
-        Pentru investigarea vulnerabilitatilor voi folosi (<a href="https://cs.chromium.org/chromium/src/v8/src" style="color:#ff707f">https://cs.chromium.org/chromium/src/v8/src</a>) codul sursa.
-        <br>
-        Analizand fisierul <code>diff.diff</code>, putem observa ca 2 vulnerabilitati au fost introduse in v8:
+        To investigate the vulnerabilities I will use (<a href="https://cs.chromium.org/chromium/src/v8/src" style="color:#ff707f">https://cs.chromium.org/chromium/src/v8/src</a>) the source code.</h5>
+      <h5>
+        Analyzing the <code>diff.diff</code> file, we can see that 2 vulnerabilities were introduced in v8:
         <ul>
           <li>
-          Prima Vulnerabilitate este un <code>out-of-bounds read</code> pentru orice obiect de tip String.
-   Se observa faptul ca bucata de cod responsabila sa restrictioneze accesarea memoriei in afara celei alocate pentru obiect, a fost eliminata. Prin urmare, lucrul acesta ne permite citirea datelor din memorie la offset arbitrar fata de obiect.
+            The first vulnerability is an <code>out-of-bounds read</code> for any String object. It is easy to notice that the piece of code responsible to restrict the access to memory outside the one allocated for the object, has been removed. Therefore, this allows us to read data from memory at arbitrary offset.
           <br><br>
           <img src="src/p1-v1.png" style="width:100%">
           <br><br>
           </li>
           <li>
-          A doua vulnerabilitate este un <code>out-of-bounds write</code> introdus in metoda <code>.fill()</code> a obiectelor de tip TypedArray.
-   Asemenea vulnerabilitatii anterioare, putem spune ca vulnerabilitatea sare in ochi datorita modului in care schmibarile au fost facute. Segmentul de cod responsabil sa verifice integritatea parametrilor metodei fill, a fost alterat, astfel avem posibilitatea de a suprascrie pana la 100000000 bytes dupa sau inaintea obiectului Typed Array.
+            The second vulnerability is an <code>out-of-bounds write</code> introduced in the <code>.fill()</code> method of TypedArray objects. Just like the previous vulnerability, we can say that the vulnerability stands out because of the way the changes were made. The code segment responsible for verifying the integrity of the parameters, of the fill method, has been altered, so we can overwrite up to 100000000 bytes after or before the Typed Array object.
           <br><br><img src="src/p1-v2.png" style="width:100%"><br><br>
           </li>
         </ul>
       </h5>
       <!-- DEBUGGING -->
       <h1><i class="fas fa-search"></i> <span style="color:#17b06b">DEBUGGING</span></h1>
-      <h5>Pentru a avea acces la cat mai multe informatii, si pentru a putea vizualiza cu usurinta memoria, voi folosi <code>gdb</code>.</h5>
-      <h5>Lucrul acesta este foarte usor de realizat: <code>gdb /bin/d8</code>, insa un feature de care dispune d8 este <code>--allow-natives-syntax</code>. Acesta ne ofera acces la o gama variata de <code>runtime functions</code> printre care si <code>%DebugPrint()</code>. </h5>
-      <h5>Aceasta functie este foarte folositoare pentru a obtine mai multe informatii despre obiecte.</h5>
+      <h5>In order to have access to as much information as possible, and to easily inspect the memory, I will use <code>gdb</code>.</h5>
+      <h5>This is very easy to do: <code>gdb /bin/d8</code>  , but one feature d8 has is <code>--allow-natives-syntax</code>. It gives us access to a wide range of runtime functions including <code>%DebugPrint()</code>.</h5>
+      <h5>This feature is very useful for getting more information about objects.</h5>
       <br>
       <div class="row">
         <div class="col-lg-6">
@@ -94,49 +91,66 @@ In cele ce urmeaza, ne vom opri atentia asupra Exploatarii Enginului de Javascri
           <img src="src/p1-str.png" style="width:100%">
         </div>
       </div><br>
-      <h5>Folosind aceasta metoda vom putea obtine <code>offsets</code> intre obiecte si vom folosi aceasta informatie in exploatare. O ultima informatie cu privire la debugging, care este foarte importanta, are de-a face cu ultimul bit dintr-o adresa. v8 foloseste acest bit pentru a tine evidenta pointerilor. Astfel, dupa cum se poate observa si in imaginea de mai sus, cand dorim sa vizualizam o adresa trebuie sa scadem acel bit.</h5>
+      <h5>Using this method we will be able to obtain <code>offsets</code> between objects and use this information in the exploit. One last piece of information about debugging, which is very important, has to do with the <code>last bit</code> of an address. v8 uses this bit to keep track of pointers. Thus, as can be seen in the image above, when we want to access data from an address we have to subtract that bit.</h5>
+      <div class="card">
+        <div class="card-header">
+          TIPS & TRICKS
+        </div>
+        <div class="card-body">
+          <blockquote class="card-blockquote">
+            <p>For setting breakpoints, I recommend an easy trick: <code>b v8::base::ieee754::cosh</code></p>
+            <footer>
+              <div class="row">
+                <div class="col-md-6">
+                  <p>Whenever we want to trigger the breakpoint, just call the function:<br>
+                    <img src="src/p1-call.png" style="width:100%">
+                  </p>
+                </div>
+                <div class="col-lg-6"><img src="src/p1-debug.png" style="width:100%"></footer></div>
+              </div>
+          </blockquote>
+        </div>
+      </div>
       <!-- EXPLOITATION -->
-      <h1><i class="fas fa-bomb"></i> <span style="color:#17b06b">EXPLOATAREA</span></h1>
+      <h1><i class="fas fa-bomb"></i> <span style="color:#17b06b">EXPLOITATION</span></h1>
       <h5>
-        Avand cele mentionate anterior in minte, cum am putea ajunge sa obtinem <code>Remote Code Execution</code>?<br>
-Vulnerabilitatile introduse sunt foarte puternice, totusi mai e nevoie de putina prelucrare pentru indeplinirea obiectivului propus.
+        So now the question is: "How could we get <code>Remote Code Execution?</code>"</h5>
+      <h5>
+        The vulnerabilities introduced are very strong, however, a little processing is still needed in order to reach objective.
         <ul>
           <li>
-            O idee ar fi sa cautam niste <code>function pointers</code> pe care sa-i suprascriem si sa redirectionam executia programului in directia dorita.
-            Analizand contexul, observam ca nu exista astfel de pointeri prin prajma obiectelor vulnerabile, astfel, aceasta idee pica ❎
+            An idea would be to look for some <code>function pointers</code> to overwrite and redirect the program execution in the desired direction. Analyzing the context, we notice that there are no such pointers, our plan is not feasible. ❎
           </li>
           <li>
-            O alta idee ar fi sa plasam intr-o zona de memorie cu drepturi de <code>read+write+execute</code> un <code>shellcode</code> prin care sa ne atingem obiectivul.
-   Analizand maparile procesului, putem observa ca nu exista o astfel de mapare. 
-   Din fericire, JavaScript nu este singurul care ajunge compilat in v8, mai este si <code>WebAssembly</code>.
-   Nu am sa detaliez ce este WebAssembly, deoarece nu reprezinta scopul writeup-ului, insa pentru mai multe informatii recomand documentatia: <a style="color:#ff707f" href="https://developer.mozilla.org/en-US/docs/WebAssembly">https://developer.mozilla.org/en-US/docs/WebAssembly</a>.
-   Spre deosebire de JIT care utilizeaza un <code>write-protect</code> flag pentru a schimba permisiunile segmentelor de memorie din <code>rw</code> in <code>rx</code> si vice versa, WebAssembly mapeaza o zona de memorie <code>rwx</code> pentru codul compilat ✅
+            Another idea would be to place in a memory area with rights to <code>read + write + execute</code> a <code>shellcode</code> to reach our goal. Analyzing the process mappings, we can see that there is no such mapping. Fortunately, JavaScript is not the only one that gets compiled in v8, so is <code>WebAssembly</code>. I will not detail what WebAssembly is, because it is not the purpose of the writeup, but for more information I recommend the documentation: <a style="color:#ff707f" href="https://developer.mozilla.org/en-US/docs/WebAssembly">https://developer.mozilla.org/en-US/docs/WebAssembly</a>.
+            <br>
+            Unlike JIT which uses a <code>write-protect flag</code> to change the permissions of memory segments from <code>rw</code> to <code>rx</code> and vice versa, WebAssembly maps a <code>rwx</code> memory area for the compiled code. ✅
    <br>
    <center><img src="src/p1-y.png" style="width:50%;"></center>   
         </li>
         </ul>
       </h5>
       <h5>
-        Folosind aceasta "proprietate", nu ne ramane decat sa gasim o modalitate de a determina adresa la care este incarcat codul compilat de <code>WASM</code>, si o modalitate de a suprascrie datele din acea zona de memorie.
+        Using this "property", we only have to find a way to determine the address where the <code>WASM</code> compiled code is loaded, and a way to overwrite the data in that memory area.
       </h5>
       <br>
-        <h5 style="color:#ff707f">1. Gasirea Zonei de Memorie</h5>
+        <h5 style="color:#ff707f">1. Finding the Memory Zone</h5>
       <br>
-      <h5>Vom incepe prin alocarea unui <code>String</code> si crearea unei instante de <code>WASM</code> </h5>
+      <h5>We will start by creating a <code>String</code> and a <code>WASM</code> instance </h5>
         <code>
           d8> const wasm = new Uint8Array([...]);<br>
           d8> let s = new String("MAMAMAMAMAMAMAM");<br>
           d8> const w_instance = new WebAssembly.Instance(new WebAssembly.Module(wasm));<br>
           d8> %DebugPrint(s)<br>
           ...<br>
-          - value: 0x23eb0820f501 <String[16]: MAMAMAMAMAMAMAM> <span style="color:#db5508"><- Stringul se va afla la adresa 0x23eb0820f501-1+0xc</span><br>
+          - value: 0x23eb0820f501 <String[16]: MAMAMAMAMAMAMAM> <span style="color:#db5508"><- The string will be at the address: 0x23eb0820f501-1+0xc</span><br>
           ...<br>
           d8> %DebugPrint(w_instance)<br>
-          DebugPrint: 0x23eb0820f829: [WasmInstanceObject] in OldSpace  <span style="color:#db5508"><- Adresa zonei de memorie se gaseste la adresa  0x23eb0820f829-1+0x68</span><br>
+          DebugPrint: 0x23eb0820f829: [WasmInstanceObject] in OldSpace  <span style="color:#db5508"><- The pointer to the memory zone is at address:  0x23eb0820f829-1+0x68</span><br>
           ...<br>
         </code>
-        <h5>Asadar, efectuand <small><code>(0x23eb0820f829-1+0x68)-(0x23eb0820f501-1+0xc) </code></small> vom obtine offsetul de care avem nevoie <small><code>0x384</code></small>.</h5>
-        <h5>Punand lucrurile cap la cap vom obtine adresa care ne intereseaza. Secventa de cod descrisa mai jos realizaeza acest lucru.</h5>
+        <h5>So, by performing <small><code>(0x23eb0820f829-1 + 0x68)-(0x23eb0820f501-1 + 0xc)</code></small> we will get the offset we need <small><code>0x384</code></small>.</h5>
+      <h5>By putting things together, we will get the address that we are interested in. The code sequence described below accomplishes this..</h5>
         <br>
         <div class="row">
           <div class="col-lg-6">
@@ -148,11 +162,11 @@ Vulnerabilitatile introduse sunt foarte puternice, totusi mai e nevoie de putina
         </div>
         <br>
         <br>
-          <h5 style="color:#ff707f">2. Suprascrierea Zonei de Memorie</h5>
+          <h5 style="color:#ff707f">2. Overwriting the Memory Area</h5>
         <br>
-        <h5>In cele din urma, nu ne mai ramane decat un singur lucru de facut, sa suprascriem octetii din zona de memorie alocata pentru <code>WASM</code> si sa o executam.</h5>
-        <h5>Desi lucrul acesta la prima vedere pare destul de "straight-forward" (avand in vedere a doua vulnerabilitate care ne permite sa suprascriem o multime de octeti), in esenta este mai complicat deoarece Array-urile pe care le alocam nu se gasesc in acelasi bloc de memorie cu octetii pe care dorim sa-i suprascriem.</h5>
-        <h5>Revenind la codul sursa, putem observa ca dupa ce sunt efectuate verificarile pentru parametrii, este invocata metoda <code>.fill()</code> , dar adresa la care sunt scrisi octetii, este luata prin proprietatea <code>->DataPtr()</code>.</h5>
+      <h5>Finally, there is only one thing left to do, to overwrite the bytes in the memory area allocated to <code>WASM</code> and execute it.</h5>
+    <h5>Although this at first glance seems rather "straight-forward" (considering the second vulnerability that allows us to overwrite a lot of bytes), it is actually more complicated because the arrays we allocate are not in the same <code>memory block</code> with the bytes we want to overwrite.</h5>
+  <h5>Returning to the source code, we can see that after the parameter checks, the <code>.fill()</code> method is invoked, but the address to which the bytes are written is taken from the property <code>->DataPtr()</code>.</h5>
         <br>
         <div class="row">
           <div class="col-lg-6">
@@ -163,22 +177,22 @@ Vulnerabilitatile introduse sunt foarte puternice, totusi mai e nevoie de putina
           </div>
         </div>
         <br>
-        <h5>Astfel planul devine urmatorul:</h5>
+        <h5>Thus the plan becomes the following:</h5>
         <ul>
-          <li>Construim doua Array-uri</li>
-          <li>Determinam distanta dintre ele</li>
-          <li>Folosim vulnerabilitatea de a suprascrie <code>out-of-bounds</code> pentru a suprascrie pointerul celui de-al doilea array cu zona de memorie <code>rwx</code></li>
-          <li>Folosim metoda <code>.fill()</code> pentru a suprascrie zona de memorie.</li>
+          <li>We create two arrays</li>
+          <li>We determine the distance between them</li>
+          <li>We use the vulnerability <code>out-of-bounds write</code> to overwrite the pointer of the second array with the <code>rwx</code> memory area</li>
+          <li>We use the <code>.fill()</code> method to overwrite the memory area.</li>
         </ul>
         <img src="src/p1-overwrite.png" style="width:100%">
         <br>     <br>
-        <h5>In cele din urma, dupa suprascrierea buffer-ului cu <code>shellcode</code>, vom obtine <code>shell</code> .</h5>  
-        <h5>Scriptul intreg poate fi gasit la adresa: <a href="https://github.com/Fineas/Me-CTF/blob/master/Writeups/20-confidence/solve_chromatic.js" style="color:#ff707f">https://github.com/Fineas/Me-CTF/blob/master/Writeups/20-confidence/solve_chromatic.js</a></h5>
-        <h1><i class="fas fa-stamp"></i><span style="color:#17b06b"> CONCLUZIE</span></h1>
-          <h5>Consider ca problema aceasta este una usoara si potrivita pentru a porni in acest domeniu.</h5>
-          <h5>Nadajduiesc ca a fost cu prisos acest articol si ca au fost lucruri noi si interesante de invatat.</h5>
-          <h5>Aceasta a fost prima mea tangenta cu scrierea articolelor, dar doresc sa continu acest lucru, a fost o experienta frumoasa 😄</h5>
-        <h1><i class="fas fa-apple-alt"></i><span style="color:#17b06b"> RESURSE</span></h1>
+        <h5>Finally, after overwriting the buffer with <code>shellcode</code>,and invoke the wasm function, we will trigger the <code>shell</code>.</h5>
+          <h5>The full script can be found at: <a href="https://github.com/Fineas/Me-CTF/blob/master/Writeups/20-confidence/solve_chromatic.js" style="color:#ff707f">https://github.com/Fineas/Me-CTF/blob/master/Writeups/20-confidence/solve_chromatic.js</a></h5>
+        <h1><i class="fas fa-stamp"></i><span style="color:#17b06b"> CONCLUSION</span></h1>
+          <h5>I think this problem is an easy and appropriate one to start in this area.</h5>
+          <h5>I hope this article was useful and there were new and interesting things to learn.</h5>
+          <h5>This was my first time writing articles, but I want to continue this, it was a beautiful experience 😄</h5>
+        <h1><i class="fas fa-apple-alt"></i><span style="color:#17b06b"> RESOURCES</span></h1>
         <ul>
           <li>https://source.chromium.org/chromium/chromium/src/+/master:v8/src/builtins</li>
           <li>https://abiondo.me/2019/01/02/exploiting-math-expm1-v8/#code-execution</li>
