@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>FeDEX - website</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/bootstrap4-neon-glow.min.css">    
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel='stylesheet' href='//cdn.jsdelivr.net/font-hack/2.020/css/hack.min.css'>
+    <link rel="stylesheet" href="../css/bootstrap4-neon-glow.css">
+    
+  </head>
+  <body>
+
+  <div class="navbar-dark text-white">
+    <div class="container">
+      <nav class="navbar px-0 navbar-expand-lg navbar-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a href="../index.html" class="pl-md-0 p-3" style="color: white;">HOME</a>
+            <a href="../blog.html" class="p-3" style="color: white;">BLOG</a>
+            <a href="../about.html" class="p-3" style="color: white;">ABOUT</a>
+          </div>
+        </div>
+      </nav>
+
+    </div>
+  </div>
+
+
+  
+<div class="container py-5 mb5">
+
+  <!-- POST TITLE -->
+  
+  <div class="row py-4">
+    <h1 class="mb-5"><span style="color:#ff707f">Chromium RCE - v8 exploitation</span></h1>
+    <!-- POST info -->
+    <div class="col-lg-12 col-md-12 col-sm-12 mb-8">
+      <h5 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Event: <span style="color:#ffffff">TCTF 2020 Quals</span></span>
+      </h5>
+      <h5 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Problem Statement: <span style="color:#ffffff">It's v8, but it's not a typical v8, it's CTF v8! Please enjoy pwning this d8 :) </span></span>
+      </h5>
+      <br>
+      <!-- INTRODUCTION -->
+      <h1><i class="fas fa-info-circle"></i> <span style="color:#17b06b">INTRODUCTION</span></h1>
+      <hr style="background-color: #ffffff;">
+      <h5>
+        On 27.06.2020 I participated in <a href="http://ctftime.org/event/1026" style="color:#ff707f">TCTF 2020 Quals</a> with <code>PwnThyBytes</code> where we ranked #17. Like always, a great CTF with cool challenges. However, because I had some exams that overlapped with the competition I couldn't participate for the entire period of it. During the CTF I tried an interesting challenge which I will try to explain in this blog post. </h5>
+        <h5>In this challenge we are given a modified version of <code>d8</code> which is running on a server with the purpose of being exploited in order to gain <code>Remote Code Execution</code>.</h5>
+            
+            <img src="src/p2-challenge.PNG" width="39%">
+            <img src="src/p2-files.PNG" width="60%">
+
+        <h5>The archive associated with the challenge consist of a patch file (<code>tctf.diff</code>) and the d8 executable.</h5>
+      <!-- EXPLORATION -->
+      <br>
+      <h1><i class="fas fa-code-branch"></i> <span style="color:#17b06b">PATCH ANALYSIS</span></h1>
+      <hr style="background-color: #ffffff;">
+      <h5>Analyzing the <code>tctf.diff</code> file, we can see that <span type="button" data-toggle="modal" data-target="#patch1" style="color:#ff707f">some changes</span> have been made to <code>typed-array-set.tq</code> such that the check inside the <code>TypedArray.prototype.set</code> method was <a style="color:#ff707f" href="https://tc39.es/ecma262/#sec-%typedarray%.prototype.set-array-offset">removed</a>.
+       Now what does this mean? In order to explain how this patch affects the security of d8, let's have a look at a simple example: <br>
+       <ul style="list-style-type: none;">
+            <li>
+                <code> var a = [1,2,3]; </code> Variable <code>a</code> is a <code>JSArray</code>. The way v8 handles this internally is by creating a so called <code>Hidden Class</code> (also known as <code>Map</code> / <code>Shape</code>). This class is shared with all objects that have the same structure / shape.<br>
+                But all the actual elements of the array are stored in a separate <code>Elements Backing Store</code>. The <a style="color:#ff707f" href="https://v8docs.nodesource.com/node-14.1/d2/dbf/classv8_1_1_backing_store.html">Backing Store</a> only stores the values. <br>
+                <img src="src/p2-array.png" width="30%"> <img src="src/p2-array_mem.PNG" width="66%"><br>
+                So, whenever a JSArray holds a refference to the Backing Store it is <code>Attached</code>. When it loses the refference it is <code>Detached</code>. <br>
+                <small style="color:#ffb500">For more information on this topic, I strongly recommend <span type="button" data-toggle="modal" data-target="#video" style="color:#ff707f">this video</span>.</small> <br>
+                Now, what is the difference between an Array (<code>JSArray</code>) and an <span type="button" data-toggle="modal" data-target="#display_structure" style="color:#17b06b">ArrayBuffer</span> (<code>JSArrayBuffer</code>)? <br>
+                  <br>
+                    <div style="padding: 10px 20px;margin: 0 0 20px; font-size: 17.5px;border-left: 3px solid #808080 ;color: #808080;font-style: italic;">
+                      An ArrayBuffer is more than just a simple array. It contains raw binary data. This is very useful for direct memory manipulation and conserving space.
+                      When you create a normal array, you won't get a proper set of contiguous memory in many cases since arrays can contain any combination of different kinds of objects
+                      With an ArrayBuffer, you have the option of moving through that data on the byte level by using Views:
+                      <ul>
+                          <li> Typed Arrays (Uint8Array, Int16Array, Float32Array, etc.) interpret the ArrayBuffer as an indexed sequence of elements of a single type.</li>
+                          <li> Instances of DataView let you access data as elements of several types (Uint8, Int16, Float32, etc.), at any byte offset inside an ArrayBuffer.</li>
+                      </ul>
+                  </div>
+            Getting back to the patch, it is now clear what a <code>Typed Array</code> is and how the security is affected by allowing the user to use <code>.set()</code> on a detached ArrayBuffer (<code>Use After Free</code>).<br>
+            </li>
+        </ul>
+      </h5>
+      <h5>
+        There are a few more patches such as:
+        <ul>
+            <br>
+          <li>
+            The <span type="button" data-toggle="modal" data-target="#patch2" style="color:#ff707f">native syntax is disabled</span> ( <code>%DebugPrint</code> will not work ) except for <code>%ArrayBufferDetach()</code>.
+          <br>
+          </li>
+          <li>
+            Imports are <span type="button" data-toggle="modal" data-target="#patch3" style="color:#ff707f">disabled</span>.
+            <br>
+          </li>
+        </ul>
+        However, when I built the d8.debug I removed the unnecessary patches and ended up with the following patchfile: <a href="https://raw.githubusercontent.com/Fineas/FeDEX/master/post/my_patch.diff" style="color:#ff707f">my_patch.diff</a>.
+        For a quick refference on how to build d8 from source, checkout <a href="https://twitter.com/farazsth98">@Faith</a>'s <a href="https://faraz.faith/2019-12-13-starctf-oob-v8-indepth/" style="color:#ff707f"> blog post</a>
+      </h5>
+      <br>
+      <!-- EXPLOITATION -->
+      <h1><i class="fas fa-bomb"></i> <span style="color:#17b06b">EXPLOITATION</span></h1>
+      <hr style="background-color: #ffffff;">
+      <h5>
+        Alright, we now know what the vulnerability is, we just need a plan to build the exploit.<br><br>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="src/p2-array_buf.PNG" width="100%">
+            </div>
+            <div class="col-md-6">
+                After <span type="button" data-toggle="modal" data-target="#play" style="color:#ff707f">playing around</span> with TypedArrays, I came to observe something very interesting. <br>For every new Typed Array ( <code>new ArrayBuffer(SIZE)</code> ), there are 4 allocations taking place: <br>
+                <ul>
+                    <li><code>calloc(SIZE)</code> for the Data buffer.</li>
+                    <li><code>malloc(48)</code> for the BackingStore</li>
+                    <li><code>malloc(32)</code> for the shared_ptr</li>
+                    <li><code>malloc(40)</code> for the ArrayBufferExtension</li>
+                </ul>
+                Whenever I detach an array ( <code>%ArrayBufferDetach()</code> ), the first 3 chunks are freed. <br>
+                Now things are getting interesting. We can <u>allocate</u>, we can <u>free</u> and we have a <u>UAF vulnerability</u>. <br>
+                It's starting to look like a classic <code>heap exploitation</code> on libc2.27.
+            </div>
+        </div>
+      </h5>
+      <br>
+        <h5 style="color:#ff707f">1. Memory Leak</h5>
+      <br>
+      <h5>Obtaining a memory leak from a Heap UAF vulnerability is trivial. I won't get into many details on how heap chunks work (more information can be found <a href="https://payatu.com/introduction-of-tcache-bins-in-heap-management">here</a>), but to remember is that once a heap chunk is freed, the <code>fd</code> and <code>bk</code> pointers are populated with appropriate addresses.</h5>
+      <h5>If we allocate a big enough chunk and then free it, the <code>bk</code> pointer will be overwritten with a libc address.</h5>
+      <h5>Hence the <code>.set()</code> method is still available for detached buffers, we can use it to copy the content of the buffer into an undetached buffer and then print it.</h5>
+        <center><img src="src/p2-leak.PNG" width="60%"></center>
+        <br>
+          <h5 style="color:#ff707f">2. Memory Write</h5>
+        <br>
+      <h5>Now that we know where <code>libc</code> is, we automatically know where <code>system()</code> is located in memory. But how can we invoke it?</h5>
+      <h5>Let's have a closer look at the BackingStore class.</h5>
+      <img src="src/p2-backing_store.PNG" width="40%"> <img src="src/p2-backing_trigger.PNG" width="55%">
+      <h5>As we can see, inside the BackingStore class there is a flag variable named <code>custom_deleter_</code>, if we manage to set it, we can invoke a "custom" <code>deleter</code>.</h5>
+      <h5>Let's see how does the instance of the class looks like inside the memory.</h5>
+      <img src="src/p2-mem-backing.PNG" width="100%">
+      <h5>How can we take control over a BackingStore structure?</h5>
+      <div class="row">
+        <div class="col-md-6">
+          <center><img src="src/annimation.gif"></center>
+        </div>
+        <div class="col-md-6">
+          <h5>The idea is to create an Array of size 48. <br>
+            Then we detach it in order to free all the 3 chunks associated to it. <br>
+            After that we create a new Array of size 32, thus retrieving 2 chunks used by the first Array.<br>
+            After that, we allocate a new Array of arbitrary size but <code>!= 48</code>. <br>
+            This will trigger an interestnig situation where the buffer used for Array1 <code>overlaps</code> with the buffer used by the 3rd Array to store the BackingStore.<br>
+            In other words, because we can still use <code>.set()</code> on detached array, we can basically <code>overwrite</code> the BackingStore and craft a custom one containing the flag set and the <code>deleter</code> pointing to <code>system()</code>.</h5>
+            <br><br>
+            <h5>You can visualize step by step the attack on the left side, with a quick mention that at the last step the 3rd Array must be detached.</h5>
+        </div>
+      </div> <br>
+      <h5>FLAG: <code>flag{dbc68439ba5f2cdbccf459cd3edb54c80b9c89e9}</code></h5>
+      <h5> You can find my full exploit at: <a href="https://github.com/Fineas/Me-CTF/blob/master/Writeups/20-TCTF/solve.js" style="color:#ff707f">https://github.com/Fineas/Me-CTF/blob/master/Writeups/20-TCTF/solve.js</a></h5>
+          <br><br>
+        
+          <h1><i class="fas fa-stamp"></i><span style="color:#17b06b"> CONCLUSION</span></h1>
+          <hr style="background-color: #ffffff;">
+          <h5>I hope you enjoyed the writeup. I really did my best to explain as well as I could.</h5>
+          <h5>I also plan to make a writeup for Chromium SBX challenge.</h5>
+          <h5>If you found any mistakes in the writeup, please let me know 😄</h5>
+          <br>
+
+        <h1><i class="fas fa-apple-alt"></i><span style="color:#17b06b"> RESOURCES</span></h1>
+        <hr style="background-color: #ffffff;">
+        <ul>
+          <li>https://source.chromium.org/chromium/chromium/src/+/master:v8/src/builtins/typed-array-set.tq</li>
+          <li>https://tc39.es/ecma262/#sec-isdetachedbuffer</li>
+          <li>https://v8.dev/blog/pointer-compression</li>
+          <li>https://faraz.faith/2019-12-13-starctf-oob-v8-indepth/</li>
+          <li>https://fineas.github.io/FeDEX/post/chromatic_aberration.html</li>
+        </ul>
+      </div>
+  </div>
+
+</div>
+
+<div class="modal fade" id="patch1" tabindex="-1" role="dialog" aria-labelledby="patch1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">typed-array-set.tq</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="src/p2-patch4.PNG" width="100%">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="patch2" tabindex="-1" role="dialog" aria-labelledby="patch2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">parser-base.h</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="src/p2-patch2.PNG" width="100%">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="patch3" tabindex="-1" role="dialog" aria-labelledby="patch3" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">d8.cc</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="src/p2-patch1.PNG" width="100%">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="video" tabindex="-1" role="dialog" aria-labelledby="video" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="width:auto !important;">
+            <div class="modal-header">
+                <h5 class="modal-title">JavaScript Engines: The Good Parts™ - Mathias Bynens & Benedikt Meurer - JSConf EU 2018</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/5nmpokoRaZI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="play" tabindex="-1" role="dialog" aria-labelledby="play" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content" style="width:auto !important;">
+          <div class="modal-header">
+              <h5 class="modal-title">Trace Allocations</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+            ......    
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="display_structure" tabindex="-1" role="dialog" aria-labelledby="display_structure" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content" style="width:auto !important;">
+          <div class="modal-header">
+              <h5 class="modal-title">v8::internal::JSArrayBuffer <small>representation in memory</small></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+            <code>Offset: 0x00 | Map Offset</code> <br>
+            <code>Offset: 0x08 | Properties Offset</code> <br>
+            <code>Offset: 0x10 | Elements Offset</code> <br>
+            <code>Offset: 0x18 | Byte Length</code> <br>
+            <code>Offset: 0x20 | Backing Store</code> <br>
+            <code>Offset: 0x28 | Allocation Base</code> <br>
+            <code>Offset: 0x30 | Allocation Length</code> <br>
+            <code>Offset: 0x38 | Bit Field</code> <br> <br>
+            <h5>For more information on v8 pointer compression I strongly recommend: <a href="https://v8.dev/blog/pointer-compression">this article</a>.</h5>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>
