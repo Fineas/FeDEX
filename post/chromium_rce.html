@@ -102,7 +102,7 @@
             <br>
           </li>
         </ul>
-        However, when I built the d8.debug I removed the unnecessary patches and ended up with the following patchfile: <a href="https://raw.githubusercontent.com/Fineas/FeDEX/master/post/my_patch.diff" style="color:#ff707f">my_patch.diff</a>.
+        However, when I built the d8.debug I removed the unnecessary patches and ended up with the following patchfile: <a href="https://github.com/Fineas/Me-CTF/blob/master/Writeups/20-TCTF/my_patch.diff" style="color:#ff707f">my_patch.diff</a>.
         For a quick refference on how to build d8 from source, checkout <a href="https://twitter.com/farazsth98">@Faith</a>'s <a href="https://faraz.faith/2019-12-13-starctf-oob-v8-indepth/" style="color:#ff707f"> blog post</a>
       </h5>
       <br>
@@ -260,9 +260,12 @@
               </button>
           </div>
           <div class="modal-body">
-            ......    
+            Open d8 inside the debugger and run it with a source file. <br>
+            <img src="src/p2-trace_trick.PNG"> <br>
+            Set a breakpoint to <code>b v8::base::ieee754::cosh</code>. <br>
+            Once you hit the first breakpoint, set a new breakpoint to <code>malloc</code> and <code>calloc</code>. <br>
+            This way, you can trace the allocations for the Array.
           </div>
-      </div>
   </div>
 </div>
 
