@@ -109,7 +109,7 @@
                                     <legend>gdb ./ch</legend>
                                         <div style="width:100%;">
                                             <div>
-                                                <img src="src/p3-poc.png" style="width:100%" />
+                                                <img src="src/p3-poc.PNG" style="width:100%" />
                                             </div>
                                         </div>
                                     <label style="padding-top:5px;">You can see that it attempts to access the value located at address 0x1000000001234 which is an invalid address (not mapped).</label>
@@ -118,7 +118,7 @@
                             </article>
                           
                             <article role="tabpanel" hidden id="file">
-                                <img style="width: 100%" src="src/p3-patch.png" />
+                                <img style="width: 100%" src="src/p3-patch.PNG" />
                             </article>
                             </section>
                         </div>
@@ -235,7 +235,7 @@ main();</pre>
                                 </li>    
                                 <li>Like we've said earlier, JIT thinks that <code>Js::OpCode::InitProto</code> has no side effects. Bu if we analyze closely with the debugger, we can see that the layout of the object is actually changed.</li>                 
                                 <li>
-                                    <img src="src/p3-proto.png" width="100%">
+                                    <img src="src/p3-proto.PNG" width="100%">
                                 </li>
                                 <li>Now, when we attempt to access property <code>obj.a</code> we will access <code>obj.auxSlots</code>. So in the POC we can see that <code>auxSlots</code> is ovrerwritten with value 0x1234 (which internally is represented as follows: <code>0x1000000001234</code>, the 1 bit represents a non-pointer value.</li>
                                 <li>
@@ -249,7 +249,7 @@ main();</pre>
                                     If we create a new object of type #1 and use it to overwrite the <code>auxSlots</code> pointer, we will end up with something like this:
                                 </li>
                                 <li>
-                                    <img src="src/p3-step1.png" style="width:100%">
+                                    <img src="src/p3-step1.PNG" style="width:100%">
                                 </li>
                                 <li>Now, our target is to overwrite the <code>auxSlots</code> pointer frmo the second object with a <code>DataView</code>. But as we can see in the blue figure, the layout of the object maps property <code>a</code> to the vtable and property <code>b</code> to the type member. Thus we need to include a new member <code>c</code> in order to overwrite the auxSlots pointer. </li>
                                 <li><pre style="background-color:#048284;margin: 0 auto;box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;">
@@ -257,7 +257,7 @@ dv1 = new DataView(new ArrayBuffer(0x100));
 o.c = dv1;</pre></li>
                                 <li>We will obtain the following:</li>
                                 <li>
-                                    <img src="src/p3-step2.png" style="width:100%">
+                                    <img src="src/p3-step2.PNG" style="width:100%">
                                 </li>
                                 <li>
                                     Perfect! Now as we can see, what is interesting for us is the <code>buffer</code> pointer. If we manage to set it to an arbitrary memory area, we will be able to perform arbitrary read / write. However, there are a few issues:
