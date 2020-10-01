@@ -51,7 +51,7 @@
                             <ul class="tree-view description" style="font-family: Arial !important;">
                                 <li> 
                                     ChakraCore was a challenge at <strong style="color: purple">Trend Micro CTF 2019 Quals</strong> in Exploit category, worth 400p.
-                                    I have attempted this challenge during the CTF but endedup solving it with an unintended solution. Now, one year later, I decided 
+                                    I have attempted this challenge during the CTF but ended up solving it with an unintended solution. Now, one year later, I decided 
                                     to challenge myself to solve the task the proper way.
                                 </li>
                                 <li>
@@ -81,8 +81,8 @@
                         <div class="box-text box-section">    
                             Challenge Files:
                             <br>
-                            <button>📄 ch</button>
-                            <button>📄 libChakraCore.so</button>
+                            <a href="https://github.com/timeoutFFFF/OldJitter/blob/d0215c64564b622352269ae6769dcad53cad55fb/Challenge/docker/bin/ch"><button>📄 ch</button></a>
+                            <a href="https://github.com/timeoutFFFF/OldJitter/blob/d0215c64564b622352269ae6769dcad53cad55fb/Challenge/docker/bin/libChakraCore.so"><button>📄 libChakraCore.so</button></a>
                             <button>📄 patch.diff</button>
                         </div>
                         <div class="box-text box-section">    
@@ -95,8 +95,8 @@
                             <article role="tabpanel" id="analy">
                                   <p class="description">The patch file is very small (you can see it in the File tab). By quickly looking at it, we observe that the <code>Js::OpCode::InitProto</code> case has been removed.</p>
                                   <p class="description">What does this mean? We don't know yet, we could take a look at the <a href="https://github.com/microsoft/ChakraCore/blob/master/lib/Backend/GlobOptFields.cpp">source code</a> and understand the side effects of the patch, but before we dive into the huge source code, I propose we <span style="font-weight: bold"><span style="color:#4285f4">G</span><span style="color:#ea4335">o</span><span style="color:#fbbc05">o</span><span style="color:#4285f4">g</span><span style="color:#34a853">l</span><span style="color:#ea4335">e</span></span> it. </p>
-                                  <p class="description">Among the first search results we can find many results that contain the text <code>CVE-2019-0567</code>. If we search for this keyword, specifically, we can find <a href="https://github.com/tunz/js-vuln-db/blob/master/chakra/CVE-2019-0567.md">this</a> web page.</p>
-                                  <p class="description">It is a <code>POC</code> for the specific CVE. Looking at the <a href="https://bugs.chromium.org/p/project-zero/issues/detail?id=1702">bug report</a> we can see that the vulnerability was discovered bu the legend <strong style="color: #0046d5">Lokihardt</strong>. He states that:</p>
+                                  <p class="description">Among the first search results we can can see that many contain the text <code>CVE-2019-0567</code>. If we search for this keyword, specifically, we can find <a href="https://github.com/tunz/js-vuln-db/blob/master/chakra/CVE-2019-0567.md">this</a> web page.</p>
+                                  <p class="description">It is a <code>POC</code> for the specific CVE. Looking at the <a href="https://bugs.chromium.org/p/project-zero/issues/detail?id=1702">bug report</a> we can see that the vulnerability was discovered by the legend <strong style="color: #0046d5">Lokihardt</strong>. He states that:</p>
                                   <blockquote>
                                     NewScObjectNoCtor and InitProto opcodes are treated as having no side effects, but actually they can have via the SetIsPrototype method of the type handler that can cause transition to a new type. This can lead to type confusion in the JITed code.
 
@@ -233,7 +233,7 @@ main();</pre>
                                         <li>value - empty object</li>
                                       </ul>
                                 </li>    
-                                <li>Like we've said earlier, JIT thinks that <code>Js::OpCode::InitProto</code> has no side effects. Bu if we analyze closely with the debugger, we can see that the layout of the object is actually changed.</li>                 
+                                <li>Like we've said earlier, JIT thinks that <code>Js::OpCode::InitProto</code> has no side effects. But if we analyze closely with the debugger, we can see that the layout of the object is actually changed.</li>                 
                                 <li>
                                     <img src="src/p3-proto.PNG" width="100%">
                                 </li>
@@ -251,7 +251,7 @@ main();</pre>
                                 <li>
                                     <img src="src/p3-step1.PNG" style="width:100%">
                                 </li>
-                                <li>Now, our target is to overwrite the <code>auxSlots</code> pointer frmo the second object with a <code>DataView</code>. But as we can see in the blue figure, the layout of the object maps property <code>a</code> to the vtable and property <code>b</code> to the type member. Thus we need to include a new member <code>c</code> in order to overwrite the auxSlots pointer. </li>
+                                <li>Now, our target is to overwrite the <code>auxSlots</code> pointer from the second object with a <code>DataView</code>. But as we can see in the blue figure, the layout of the object maps property <code>a</code> to the vtable and property <code>b</code> to the type member. Thus we need to include a new member <code>c</code> in order to overwrite the auxSlots pointer. </li>
                                 <li><pre style="background-color:#048284;margin: 0 auto;box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;">
 dv1 = new DataView(new ArrayBuffer(0x100));
 o.c = dv1;</pre></li>
@@ -282,7 +282,7 @@ obj.noua = 9;</pre>
                                 </li>
                                 <li>Now, if we perform <code>obj.opt = VALUE</code> we corrupted the buffer pointer.</li>
                                 <li>Lastly, the 2nd issue can be treated as follows: overwrite the buffer pointer with another <code>DataView</code> and then use the first one to overwrite the <code>buffer</code> pointer of the 2nd DataView.</li>
-                                <li>Thus, we can achieve arbitrary <code>READ</code> and <code>WRITE</code> by contsantly adjusting the buffer pointer of the second DataView and then writing or reading from there.</li>
+                                <li>Thus, we can achieve arbitrary <code>READ</code> and <code>WRITE</code> by constantly adjusting the buffer pointer of the second DataView and then writing or reading from there.</li>
                                 <li>
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -322,6 +322,7 @@ function write(what1, what2, where1, where2){
                                 <li>Well, we first need a memory leak. We can obtain that very easy by reading the <code>vtable</code> pointer of the 2nd DataView. With this leak we are able to locate the GOT entry of the <code>free</code> function which is located at offset <code>0x00000000023354d0</code>.</li>
                                 <li>From there, we can leak the libc address.</li>
                                 <li>Once we got a <code>libc</code> leak, we can use a neat trick which is to overwrite the <code>free_hook</code> with the address of the <code>system</code> function and then call <code>console.log("/bin/sh\x00")</code> which will trigger the <code>free_hook</code> because of the <a href="https://github.com/microsoft/ChakraCore/blob/master/bin/ch/WScriptJsrt.cpp">following snippet</a>.</li>
+                                <li>My Exploit Code: <a href="https://github.com/Fineas/Me-CTF/blob/master/Writeups/19-TrendMicro/solve_chakra.js">https://github.com/Fineas/Me-CTF/blob/master/Writeups/19-TrendMicro/solve_chakra.js</a></li>
                             </ul>
                         </div>
 
