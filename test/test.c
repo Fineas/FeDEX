@@ -12,3 +12,4 @@ int main(){
 }
 
 // https://fineas.github.io/FeDEX/test/a.out
+// https://fineas.github.io/FeDEX/test/bin32
