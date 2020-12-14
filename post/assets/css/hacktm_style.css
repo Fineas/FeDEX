@@ -1,0 +1,163 @@
+@font-face {
+    font-family: 'space_monoregular';
+    src: url('../font/SpaceMono-Regular.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+
+/* @font-face {
+    font-family: 'space_monoregular';
+    src: url("../font/spacemono-regular-webfont.woff2")
+} */
+
+
+body{
+    background-color: #141327 !important;
+    background-image: url("") !important;
+    font-family: space_monoregular !important;
+}
+
+.orange_text{
+    color: #f35916 !important;
+    font-family: space_monoregular !important;
+
+}
+
+.purple_text{
+    color: #6863ed !important;
+    font-family: space_monoregular !important;
+}
+
+code{
+    color: #fdb50f !important;
+}
+
+a{
+    color: #6863ed !important;
+}
+
+
+.team-table .team-name {
+    text-align: left !important;
+    color: #6863ed;
+}
+
+.team-table .team-name {
+    max-width: 500px;
+    width: 20px;
+    text-align: right;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-left: 0;
+}
+
+.team-table .team-flag {
+    padding-left: 0;
+    width: 10px;
+}
+.team-table>tbody>tr>td {
+    vertical-align: top;
+}
+.team-table .team-progress-bar {
+    border-bottom: none;
+}
+.team-table .team-progress-bar {
+    float: left;
+    width: 100%;
+    /* border-bottom: 5px solid #505050; */
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 2px;
+}
+.team-table .team-score {
+    position: absolute;
+    margin-left: -3px;
+}
+.team-table>tbody>tr>td {
+    vertical-align: top;
+}
+td.team-score {
+    color: #fdb50f;
+}
+
+.team-table {
+    font-weight: 700;
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.team-table>tbody>tr:nth-of-type(2n+1) {
+    background-color: rgba(10,10,10,.125);
+}
+
+.progress-bar {
+    float: left;
+    width: 0;
+    height: 100%;
+    font-size: 12px;
+    line-height: 20px;
+    color: #fff;
+    text-align: center;
+    background-color: #337ab7;
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+    -webkit-transition: width .6s ease;
+    -o-transition: width .6s ease;
+    transition: width .6s ease;
+}
+
+.team-table .progress {
+    background: 0 0;
+    margin-bottom: 0;
+    border-radius: 0;
+    height: 26px;
+}
+
+
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+.team-table .progress svg {
+    display: none;
+}
+
+.team-table .progress svg {
+    width: 23px;
+    float: right;
+}
+
+.team-table .progress-bar {
+    background: #2f2d5a;
+}
+
+.progress-bar.progress-bar-success {
+    background: #2f2d5a;
+}
+
+.team-table>tbody>tr>td {
+    vertical-align: top;
+}
+.team-table .team-name .team-number {
+    color: #6863ed!important;
+    text-decoration: underline;
+}
+
+.team-table .team-number {
+    padding-left: 0;
+    padding-right: 3px;
+    width: 5px;
+    display: inline;
+    color: #505050;
+}
