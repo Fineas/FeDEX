@@ -161,3 +161,56 @@ td.team-score {
     display: inline;
     color: #505050;
 }
+
+.pk-card {
+    background-color: #fff;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    font-size: 14px;
+    overflow: hidden;
+    color: #4a4a4a;
+}
+
+.pk-card .pk-editor {
+    background-color: #e1e8ed;
+    border-bottom: 1px solid #d3d3d3;
+    overflow: hidden;
+}
+.pk-card .pk-content {
+    font: normal normal 16px/1.4 Helvetica,Roboto,Segoe UI,Calibri,sans-serif;
+    padding: .75rem;
+    text-align: left;
+}
+
+.pk-card .pk-card-title, .pk-card .pk-description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: .33rem;
+}
+
+.pk-card .pk-card-title {
+    font-weight: 700;
+    max-height: 1.3em;
+}
+
+.pk-card .pk-description {
+    max-height: 1.3rem;
+}
+
+.pk-card .pk-card-title, .pk-card .pk-description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: .33rem;
+}
+
+.pk-card .pk-destination {
+    text-transform: lowercase;
+    color: #8899a6;
+    max-height: 1.3em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: .33rem;
+}
