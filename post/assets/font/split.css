@@ -1,0 +1,208 @@
+/* arabic */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(FCc9_yQKk0B9wF_8wYSwOVKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC;
+}
+/* bengali */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(OyY1UevUupCthuIjnicxJVKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0964-0965, U+0981-09FB, U+200C-200D, U+20B9, U+25CC;
+}
+/* myanmar */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(FOJe7qRzl7V1ggRlXLqi1FKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+1000-109F, U+200C-200D, U+25CC;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(sH39PefGUZTz4RZdXBzSNVKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(n3jNnpL7AV9ujfDUdwr8-1KPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* ethiopic */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(aUDKs5R-zc3O4HPt-L4AulKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+1200-1399, U+2D80-2DDE, U+AB01-AB2E;
+}
+/* greek */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(uPWGS9gqZZ7dRyd9ftRqn1KPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0370-03FF;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(04B_vurpcArAHhkysnL6ClKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* gujarati */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(pPhre3dP5qi_SdmvaFN1YlKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0964-0965, U+0A80-0AFF, U+200C-200D, U+20B9, U+25CC, U+A830-A839;
+}
+/* gurmukhi */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(srVkdLH03LXwKIqBdhxANVKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0964-0965, U+0A01-0A75, U+200C-200D, U+20B9, U+25CC, U+262C, U+A830-A839;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(ZFwy3t1rSq4LguQbWQ-VmlKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0590-05FF, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(CdlKuhCFJKz7zf4vbrip2lKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+/* kannada */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(ZgAEr4lJpVFpm2US9VEpdVKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0964-0965, U+0C82-0CF2, U+200C-200D, U+20B9, U+25CC;
+}
+/* khmer */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(gW_vhSMphus0hezj24O5OFKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+1780-17FF, U+200C, U+25CC;
+}
+/* korean */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(YwLZ5AnO2WIahocj7pJiTVKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+3131-318E, U+3200-321C, U+3260-327B, U+AC00-D7AF;
+}
+/* lao */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(3xwUP3IPUAC2D69IYbMH01KPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0E81-0EDF, U+25CC;
+}
+/* latin */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(EUA6CLEOvQxi7CFwoAJ7_1KPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(quU8HDQLmwPzWO3YREpv9FKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* malayalam */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(PHbVPjgQIuLrQtCq54dIvFKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0307, U+0323, U+0964-0965, U+0D02-0D7F, U+200C-200D, U+20B9, U+25CC;
+}
+/* oriya */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(nvXeg8VuC471ReEJfyXZHVKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0964-0965, U+0B01-0B77, U+200C-200D, U+20B9, U+25CC;
+}
+/* sinhala */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(9Zf2F2IeWYjJGohG7Fd1FVKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0964-0965, U+0D82-0DF4, U+200C-200D, U+25CC;
+}
+/* tamil */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(AyIliAa4NxCzJWRIJFoNvVKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0964-0965, U+0B82-0BFA, U+200C-200D, U+20B9, U+25CC;
+}
+/* telugu */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(igj15RSk0hBM3Pp-xJSsp1KPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0C00-0C7F, U+1CDA, U+200C-200D, U+25CC;
+}
+/* thai */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(e8Pz3tcwuIvie55nnBgSylKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0E01-0E5B, U+200C-200D, U+25CC;
+}
+/* tibetan */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(SH-XJVKI5D2ZvwbGANsPJFKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0F00-0FFF, U+200C-200D, U+25CC;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Unifont';
+  font-style: normal;
+  font-display: swap;
+  src: local('Unifont'), url(8kjjFOaP4Y-qmkMse9IoVVKPGs1ZzpMvnHX-7fPOuAc.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}

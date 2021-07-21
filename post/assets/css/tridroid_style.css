@@ -1,0 +1,57 @@
+body {
+    background-color: #ededed !important;
+    background: url("../../src/p4-background.png") no-repeat center center fixed;
+    background-size:  cover;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    font-family: 'Unifont', monospace !important;
+}
+
+.menu_btns {
+    color: black !important;
+}
+.menu_btns:hover{
+    color: black !important;
+}
+
+h5{
+    color: black !important;
+}
+
+a{
+    color: #8b43e4 !important;
+    font-weight: bold;
+}
+a:hover{
+    color: #8b43e4 !important;
+    font-weight: bold;
+}
+
+code{
+    color: black !important;
+    
+    background-color: #afec33;
+    border-radius: 0.3em;
+    padding: 3px 5px 4px;
+    white-space: nowrap;
+}
+
+pre code {
+    white-space: pre;
+}
+
+.image_frame{
+    border: 2px solid black;
+    margin-top: 1%;
+    margin-bottom: 1.5%;
+    box-shadow: 10px 10px 5px #ccc;
+      -moz-box-shadow: 10px 10px 5px #ccc;
+      -webkit-box-shadow: 10px 10px 5px #ccc;
+      -khtml-box-shadow: 10px 10px 5px #ccc;
+    font-size: 70% !important;
+}
