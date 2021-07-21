@@ -123,7 +123,7 @@
 
         Next thing we can do is look at the <code>onCreate()</code> method as it is the first method that gets called when an activity is first launched.
       </h5>
-        <center><img src="src/p4-activity.PNG"></center>
+        <center><img src="src/p4-activity.png"></center>
       <h5>
         Besides layout elements, we can see 2 interesting functions being called: <code>generateSecretKey()</code> and <code>createPasswordFile()</code>. After that, a listener is set to retrieve data from the <b>TextView</b> and send it into the <b>WebView</b> using a <a href="https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent">WebMessage</a>.
         Another interesting thing to observe is that the application registers a <code>broadcastReceiver</code> which expects an <b>intent</b> who's action set to <u>com.google.ctf.pwn.tridroid.SET_FLAG</u> 
