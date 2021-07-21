@@ -55,7 +55,7 @@
         <span class="text-muted"><span style="font-weight: bold;color: #8b43e4 !important;font-weight: bold;">Category:</span> <span style="color:black">pwn <img src="src/p4-pwn_icon.svg" width="20px;"> 363pt</span></span>
       </h5>
             <h5 class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-muted"><span style="font-weight: bold;color: #8b43e4 !important;font-weight: bold;"><span style="display: inline-block;transform: translateY(.1vw) scaleY(.9) rotate(90deg);">⇥</span>Attachment:</span> <span style="color:black">961dc8f30d5b4915dbcbf057a4c26f00...70a70f97ee3b4bc81102358343c0fb5.zip</span></span>
+        <span class="text-muted"><span style="font-weight: bold;color: #8b43e4 !important;font-weight: bold;"><span style="display: inline-block;transform: translateY(.1vw) scaleY(.9) rotate(90deg);">⇥</span>Attachment:</span> <a href="https://github.com/Fineas/Me-CTF/blob/master/Writeups/21-GoogleCTF/961dc8f30d5b4915dbcbf057a4c26f009746d676705e98b4df71fa0537fb6e1060adf248406563ca1e7f7c994ea89cd5f70a70f97ee3b4bc81102358343c0fb5.zip"><span style="color:black">961dc8f30d5b4915dbcbf057a4c26f00...70a70f97ee3b4bc81102358343c0fb5.zip</span></a></span>
       </h5>
       <h5 class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-muted"><span style="font-weight: bold;color: #8b43e4 !important;font-weight: bold;">Problem Statement:</span> <span style="color:black">Are you proficient enough to penetrate through the triangle of Android? 
@@ -245,7 +245,7 @@ console.log(`Hello ${alert("FeDEX does XSS")}`);
             <center><img src="src/p4-adb.PNG" class="image_frame" width="100%"></center>
             With <b>adb</b> we can install the application on the emulator, run it and interact with it (send payload).
             <center><img src="src/p4-adb-interact.PNG" class="image_frame" width="90%"></center>
-            The final step in preparing the environment, for pwning the application, is setting up the <b>debugger</b>. We first need to upload this execuable of <a href="">gdbserver</a> on the emulator:
+            The final step in preparing the environment, for pwning the application, is setting up the <b>debugger</b>. We first need to upload this execuable of <a href="https://github.com/Fineas/Me-CTF/blob/master/Writeups/21-GoogleCTF/gdbserver">gdbserver</a> on the emulator:
             <pre class="image_frame" style="background: #e8e8e8!important;padding: 0% 0% 0% 2% !important;margin-bottom:1.5% !important"><code class="language-bash">
 $ adb push ./gdbserver /data/local/tmp
             </code></pre>
