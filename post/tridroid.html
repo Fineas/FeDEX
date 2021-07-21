@@ -45,7 +45,7 @@
   <!-- POST TITLE -->
   
   <div class="row py-4">
-    <h1 class="mb-5"><span style="color:black; font-weight: bold;">TRIDROID - Android Application Exploitation</span><img src="src/p4-gctf.png" width="5%"></h1>
+    <h1 class="mb-5"><span style="color:black; font-weight: bold;">TRIDROID - Android Application Exploitation</span><img src="src/p4-gCTF.png" width="5%"></h1>
     <!-- POST info -->
     <div class="col-lg-12 col-md-12 col-sm-12 mb-8">
       <h5 class="d-flex justify-content-between align-items-center mb-3">
@@ -68,7 +68,7 @@
       <h1><img src="src/p4-part1.png" width="5%"><span style="color:black; font-weight: bold;"> INTRODUCTION</span></h1>
       <h5>
         Google CTF, one of my favorite CTFs of the year. Playing with <a href="https://ctftime.org/team/57908" target="_blank">WreckTheLine</a> team, we managed to finish #12, very exciting since top 16 teams will participate in the finals, this year.
-        <center><img src="src/p4-ranking.png" width="100%"></center>
+        <center><img src="src/p4-ranking.PNG" width="100%"></center>
         I've spent most of the time working on <code>ATHERIS</code> and <code>TRIDROID</code> challenges. They were both great challenges, but particularly TRIDROID caught my attention since it's an Android Application Exploitation type of challenge.
         In this writeup, I will try to walk you through the entire thinking and solving process that my teammate <a href="https://twitter.com/JaGoTu">JaGoTu</a> and I went through during the CTF.
       </h5><br>
@@ -111,7 +111,7 @@
       </h5>
       <h5>
         Let's first open the <u>Resources/AndroidManifest.xml</u> file to get an overview of the components:
-        <div class="row"><center><img src="src/p4-manifest.png" width="100%;" class="image_frame"></center></div>
+        <div class="row"><center><img src="src/p4-manifest.PNG" width="100%;" class="image_frame"></center></div>
         It seems that inside the application there is just one activity named <code>MainActivity</code>.
 
         We will open the <u>com.google/ctf.pwn.tridroid/MainActivity</u> Class file to analyze the MainActivity activity.<br><br>
@@ -123,14 +123,14 @@
 
         Next thing we can do is look at the <code>onCreate()</code> method as it is the first method that gets called when an activity is first launched.
       </h5>
-        <center><img src="src/p4-activity.png"></center>
+        <center><img src="src/p4-activity.PNG"></center>
       <h5>
         Besides layout elements, we can see 2 interesting functions being called: <code>generateSecretKey()</code> and <code>createPasswordFile()</code>. After that, a listener is set to retrieve data from the <b>TextView</b> and send it into the <b>WebView</b> using a <a href="https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent">WebMessage</a>.
         Another interesting thing to observe is that the application registers a <code>broadcastReceiver</code> which expects an <b>intent</b> who's action set to <u>com.google.ctf.pwn.tridroid.SET_FLAG</u> 
         will initiate the <b>SET_FLAG_INTENT</b> property, same goes if the action is set to <u>com.google.ctf.pwn.tridroid.SET_NAME</u>, but it will set <b>SET_NAME_INTENT</b>.
         Below, we can see that <u>Javascript</u> is being enabled in <code>WebView</code>, <u>File Access from URLs</u> is being enabled and a <u>JavaScript Interface</u>, called "<b>bridge</b>", is created and later, the <a href="">file:///android_asset/index.html</a> file is loaded.
       </h5>
-        <div class="row"><center><img src="src/p4-oncreate.png" width="90%"  class="image_frame"></center></div>
+        <div class="row"><center><img src="src/p4-oncreate.PNG" width="90%"  class="image_frame"></center></div>
       <h5>
         Let's analyze now the 2 functions we discovered earlier, <code>generateSecretKey()</code>:<br>
             We can see that the key is basically always the same.
@@ -194,7 +194,7 @@ APP/lib/x86_64/libtridroid.so: ELF 64-bit LSB shared object, x86-64, version 1 (
                     <li><b>top</b> - prints the value from the stack_top.</li>
                 </ul>
             </h5>
-            <center><img src="src/p4-managestack.png" class="image_frame" width="50%"></center>
+            <center><img src="src/p4-managestack.PNG" class="image_frame" width="50%"></center>
             <h5>
         Another interesting observation is that there are a few other functions inside the binary, but <code>invokeJavaMethod()</code> looks particularly interesting 💡 <br>
         <pre class="image_frame" style="background: #e8e8e8!important;padding: 0% 0% 0% 2% !important;margin-bottom:1.5% !important"><code class="language-c">
@@ -242,7 +242,7 @@ console.log(`Hello ${alert("FeDEX does XSS")}`);
             The first thing we need to have is the <b>Android Virtual Device Manager</b> (AVD Manager) installed (it comes with Android Studio). With it, we will create a <b>Virtual Device</b> with the following specifications: 
         </h5><center><img src="src/p4-device_specs.PNG" width="60%" class="image_frame"></center><h5>
             Then, we must make sure that we have <b>adb</b> installed and we can access the emulator
-            <center><img src="src/p4-adb.png" class="image_frame" width="100%"></center>
+            <center><img src="src/p4-adb.PNG" class="image_frame" width="100%"></center>
             With <b>adb</b> we can install the application on the emulator, run it and interact with it (send payload).
             <center><img src="src/p4-adb-interact.PNG" class="image_frame" width="90%"></center>
             The final step in preparing the environment, for pwning the application, is setting up the <b>debugger</b>. We first need to upload this execuable of <a href="">gdbserver</a> on the emulator:
