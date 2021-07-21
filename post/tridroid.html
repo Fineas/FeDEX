@@ -68,7 +68,7 @@
       <h1><img src="src/p4-part1.png" width="5%"><span style="color:black; font-weight: bold;"> INTRODUCTION</span></h1>
       <h5>
         Google CTF, one of my favorite CTFs of the year. Playing with <a href="https://ctftime.org/team/57908" target="_blank">WreckTheLine</a> team, we managed to finish #12, very exciting since top 16 teams will participate in the finals, this year.
-        <center><img src="src/p4-ranking.png"></center>
+        <center><img src="src/p4-ranking.png" width="100%"></center>
         I've spent most of the time working on <code>ATHERIS</code> and <code>TRIDROID</code> challenges. They were both great challenges, but particularly TRIDROID caught my attention since it's an Android Application Exploitation type of challenge.
         In this writeup, I will try to walk you through the entire thinking and solving process that my teammate <a href="https://twitter.com/JaGoTu">JaGoTu</a> and I went through during the CTF.
       </h5><br>
@@ -232,9 +232,9 @@ console.log(`Hello ${alert("FeDEX does XSS")}`);
       Good, but now, how can we get to the point where we can interact with stack's <b>modify()</b> function and exploit the binary? We know that in order to use the <b>manageStack()</b> function, a <u>password</u> must be supplied.
 	    <br><center><code>? -> [ Enter Password -> BOF -> ROPCHAIN -> invokeJavaMethod() ] -> [ showFlag() ]</code></center>
       How can we leak the password that is saved in <u>password.txt</u>? Remember that the WebView has <b>fileAccessUrl</b> enabled, thus we could read <u>file:///data/data/com.google.ctf.pwn.tridroid/files/password.txt</u> and get the password.
-	    <br><center><code>? -> [Get Password] -> [ Enter Password -> BOG -> ROPCHAIN -> invokeJavaMethod() ] -> [ showFlag() ]</code></center>
+	    <br><center><code>? -> [Get Password] -> [ Enter Password -> BOF -> ROPCHAIN -> invokeJavaMethod() ] -> [ showFlag() ]</code></center>
       Lastly, no need to ask the question, we can deduce that the password file will be accessed through <b>JavaScript code</b> which we can execute.
-        <br><center><code>[JavaScript Code] -> [Get Password] -> [ Enter Password -> BOG -> ROPCHAIN -> invokeJavaMethod() ] -> [ showFlag() ]</code></center>
+        <br><center><code>[JS Code] -> [Get Password] -> [ Enter Password -> BOF -> ROPCHAIN -> invokeJavaMethod() ] -> [ showFlag() ]</code></center>
       </h5><br>
         
         <h1><img src="src/p4-part5.png" width="5%"><span style="color:black; font-weight: bold;"> SETUP</span></h1>
@@ -242,8 +242,9 @@ console.log(`Hello ${alert("FeDEX does XSS")}`);
             The first thing we need to have is the <b>Android Virtual Device Manager</b> (AVD Manager) installed (it comes with Android Studio). With it, we will create a <b>Virtual Device</b> with the following specifications: 
         </h5><center><img src="src/p4-device_specs.PNG" width="60%" class="image_frame"></center><h5>
             Then, we must make sure that we have <b>adb</b> installed and we can access the emulator
-            <center><img src="src/p4-adb.png" class="image_frame"></center>
-            With <b>adb</b> we can install the application on the emulator, run it and interact with it (send payload).<br><br>
+            <center><img src="src/p4-adb.png" class="image_frame" width="100%"></center>
+            With <b>adb</b> we can install the application on the emulator, run it and interact with it (send payload).
+            <center><img src="src/p4-adb-interact.PNG" class="image_frame" width="90%"></center>
             The final step in preparing the environment, for pwning the application, is setting up the <b>debugger</b>. We first need to upload this execuable of <a href="">gdbserver</a> on the emulator:
             <pre class="image_frame" style="background: #e8e8e8!important;padding: 0% 0% 0% 2% !important;margin-bottom:1.5% !important"><code class="language-bash">
 $ adb push ./gdbserver /data/local/tmp
@@ -548,7 +549,7 @@ So the next plan is to write somewhere in memory the string <i>"showFlag"</i> an
 </code></pre>
 
 If we now run this exploit and then run in paralel the following command:
-<center><img class="image_frame" src="src/p4-leak_flag.PNG"></center>
+<center><img class="image_frame" src="src/p4-leak_flag.PNG" width="100%"></center>
 We got the local flag, encrypted!
 
 We do the same thing remote, and we get the remote flag, encrypted.
