@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>FeDEX - website</title>
+
+    <link rel="stylesheet" href="../css/bootstrap4-neon-glow.min.css">    
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel='stylesheet' href='assets/css/hack.min.css'>
+    <link rel="stylesheet" href="../css/bootstrap4-neon-glow.css">
+    <link rel="stylesheet" href="assets/css/qlaas_style.css">
+    <script data-name="BMC-Widget" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="FetchDEX" data-description="Support me on Buy me a coffee!" data-message="Thank you for visiting. You can now buy me a coffee!" data-color="#79D6B5" data-position="" data-x_margin="10" data-y_margin="30"></script>
+  
+    
+  </head>
+  <body>
+
+  <div class="navbar-dark text-white">
+    <div class="container">
+      <nav class="navbar px-0 navbar-expand-lg navbar-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a href="../index.html" class="pl-md-0 p-3" style="color: white;">HOME</a>
+            <a href="../blog.html" class="p-3" style="color: white;">BLOG</a>
+            <a href="../about.html" class="p-3" style="color: white;">ABOUT</a>
+          </div>
+        </div>
+      </nav>
+
+    </div>
+  </div>
+
+
+  
+<div class="container py-5 mb5">
+
+  <!-- POST TITLE -->
+  
+  <div class="row py-4">
+    <h1 class="mb-5" style="margin-bottom: 1.5rem !important"><span style="color:rgb(217, 28, 36)">QLAAS - Exploiting Qiling 1.4.1 </span></h1>
+    <!-- POST info -->
+    <div class="col-lg-12 col-md-12 col-sm-12 mb-8">
+      <center><img src="assets/img/rwctf_banner.png" width="80%"></center><br>
+      <h5 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Event: <span style="color:#ffffff">Real World CTF 4th (2022)</span></span>
+      </h5>
+      <br>
+      <!-- INTRODUCTION -->
+      <h1><i class="fas fa-info-circle"></i><span>&lt;INTRODUCTION&gt;</span></h1>
+      <p>
+        Real World CTF, first organized in 2018, has come to be one of the highlights of the year for the CTF community. 
+        It tries to prove wrong all the CTF haters (<a href="https://twitter.com/CristiVlad25/status/1313071875036262403">"I hate CTFs because they are not realistic."</a>)
+        by building challenges on top of real world applications.  
+      </p>
+      <p>
+        This year, due to COVID-19, the format was "Online Jeopardy", only, with no Final Stage. However, in previous editions, the final event was simply incredible.
+        <br>
+        <a href="https://twitter.com/RealWorldCTF/status/1067409724029771778"><img src="assets/img/rwctf1.jfif" width="24%"></a>
+        <a href="https://twitter.com/RealWorldCTF/status/1068706800524943360"><img src="assets/img/rwctf2.jfif" width="24%"></a>
+        <a href="https://twitter.com/RealWorldCTF/status/1068817059755130880"><img src="assets/img/rwctf3.jfif" width="24%"></a>
+        <a href="https://twitter.com/RealWorldCTF/status/1069133594369507333"><img src="assets/img/rwctf4.jfif" width="24%"></a>
+        <br>
+        <a href="https://www.youtube.com/watch?v=2S_TXaGYD8E&ab_channel=LiveOverflow">Here</a> you can find a cool vlog made by LiveOverflow prezenting the 2018 finals. 
+      </p>
+      <p>
+        But anyway, this year, together with my teammates from <a href="http://wrecktheline.com/">WreckTheLine</a> we managed to finish the CTF on #5 which is an incredible performance and great team effort. Really Proud.
+      </p>
+      <center><img src="assets/img/rwctf7.png"></center><br>
+      <p>Enough with the introduction now, let's dive into this amazing challenge...</p>
+      <!-- EXPLORATION -->
+      <h1><i class="fas fa-code-branch"></i> <span>&lt;SETUP & RECON&gt;</span></h1>
+      <h5 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Problem Statement: <span style="color:#ffffff">Qiling as a Service. </span></span>
+      </h5>
+      <h5 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Problem Stats: <span style="color:#ffffff">23 solves, 182pts <code>Clone-and-Pwn</code> <code>difficulty:Schrödinger</code> </span></span>
+      </h5>
+      <p>
+        The challenge provided us with an ip & port <code>nc 47.242.149.197 7600</code>, in order to pwn the task remotely and get the flag, plus an arhcive <a href="#">QLaaS_61a8e641694e10ce360554241bdda977.tar.gz</a>
+        . The goal is to run the SUID binary <code>/readflag</code> which will print the file <code>flag</code> .
+      </p>
+      <p>
+        Opening the archive we can see that there's just one small python script:
+      </p>
+      <div class="row">
+        <div class="col-lg-6">
+          <img src="assets/img/rwctf5.png">
+        </div>
+        <div class="col-lg-6">
+          The program is asking us to provide a binary <code>b64</code> encoded. Then, it will proceed to create a temporary directory
+          and save our binary inside that folder. After that, a Qiling instance is created, to whom the path to the binary and the temporary folder
+          are passed, followed by a call to the <code>run()</code> method.<br><br>
+          Another observation we can make from the source code is that the qiling version used is <code>1.4.1</code> (the latest version).<br><br> Alright, now that we know what the script does
+          let's take a look and see what <a href="https://github.com/qilingframework/qiling">Qiling</a> is about: <br>
+          &nbsp; > "An Advanced Binary Emulation Framework."<br><br>
+          This means that the framework is able to emulate a native computer, in an isolated environment. It provides support for Windows, MacOS, Linux, BSD, UEFI, DOS, MBR, Ethereum Virtual Machine. Cool.<br><br>
+          Let's have a look at qiling's <a href="https://docs.qiling.io/en/latest/howto/">API</a>.
+        </div>
+      </div><br>
+        <p>
+          It turns out that the Qiling constructor is expecting a binary to emulate and a <code>rootfs</code> (sandbox). But then, how will it know what type of 
+          binary we've provided? Let's check that in the <a href="https://github.com/qilingframework/qiling/blob/master/qiling/core.py">source code</a>. 
+        </p>
+        <center><img src="assets/img/rwctf6.png"></center><br>
+        <p>
+          First, it will look for certain file extensions, if they are not provided as part of the filename, then it will look for file signatures (ex. <code>\x7fELF</code>) and determin
+          the operating system from that. Great, now we know, that we're allowed to work with any binary from the supported list since no specific <code>ostype</code> is passed to <code>Qiling</code>. 
+        </p>
+      <!-- DEBUGGING -->
+      <h1><i class="fas fa-search"></i><span>&lt;Vulnerability Discovery&gt;</span></h1>
+      <p>
+        Okay, we now should have a clear understanding of what we're dealing with, and what the goal is: <u>escape the sandbox by exploiting the framework with the binary that we provide and then execute
+        the <code>/senflag</code> binary to get the flag.</u><br>
+        But the real question is: how on earth are we going to do that, after all, we're dealing with thousands of lines of code.
+      </p>
+      <p>
+        The best approach to this is to try and divide this big chunk of code into smaller chunks. For example, a small chunk could be the <code>syscall</code> implementation.
+        Qiling implemented quite a lot of system calls from all the supported operating systems.
+      </p>
+      <p>
+        The source code for this can be found here: <a href="https://github.com/qilingframework/qiling/blob/master/qiling/os/posix/syscall/fcntl.py">https://github.com/qilingframework/qiling/blob/master/qiling/os/posix/syscall/fcntl.py</a>
+      </p>
+      <p>
+        Let's have a look at <code>ql_syscall_openat(ql: Qiling, fd: int, path: int, flags: int, mode: int)</code>
+      </p>
+      <div class="row">
+        <div class="col-lg-6">
+          <img src="assets/img/rwctf8.png" style="width:100%">
+        </div>
+        <div class="col-lg-6">
+          <code>openat</code> is a systemcall that "operates in exactly the same way as <b>open(2)</b>" except for a few differences:
+          <ul>
+            <li>
+              If the pathname given in <i>pathname</i> is relative, then it is interpreted relative to the directory referred to by the file descriptor <i>dirfd</i> (rather than relative to the current working 
+              directory of the calling process, as is done by <b>open(2)</b> for a relative pathname).
+            </li>
+            <li>
+              If the pathname given in <i>pathname</i> is relative and dirfd is the special value <b>AT_FDCWD</b>, then <i>pathname</i> is 
+              interpreted relative to the current working directory of the calling process (like <b>open(2)</b>).
+            </li>
+            <li>
+              ❗ If the pathname given in <i>pathname</i> is absolute, then <i>dirfd</i> is ignored. ❗
+            </li>
+          </ul>
+          <p>
+            Quickly looking at the function line by line, we can see that it first reads the <code>file_path</code> , sets the <code>flags & mode</code>
+            and then iterates over the <code>fd</code> array to find an empty slot which is stored in <code>idx</code>. On success, 
+            a few checks are performed which eventually will bring us to line no. 108. Here we can see that the function <code>open_ql_file</code> is called and <code>dir_fd</code> is passed to it.
+          </p>
+        </div>
+      </div>
+      <center><img src="assets/img/rwctf9.png" style="width:70%"></center><br>
+      <p>
+        Inside the <code>open_ql_file</code> function, there is a check on the parameter <code>path</code> (file_path)
+        to see if it has_mapping, that basically means if the file is already opened. On contrary, the functions checks if <code>dir_fd</code> parameter is set (not null)
+        and then execute: <code>ql_file.open</code> -> <code>open(real_path, openmode)</code> 💡
+      </p>
+      <p>
+        Now this is very interesting. In a nutshell, if we call openat with an existing file descriptor (let's say <code>1</code>) and the path to a file (let's say <code>/etc/passwd</code>)
+        we will be able to create a <code>fd</code> to the file and read / write from / to it without being restricted by the Qiling's rootfs.
+      </p>
+
+
+      <!-- EXPLOITATION -->
+      <h1><i class="fas fa-bomb"></i> <span>&lt;EXPLOITATION&gt;</span></h1>
+      <p>
+        Let's test what we've just discovered:
+      </p>
+      <div class="row">
+        <div class="col-lg-6">
+          <img src="assets/img/rwctf10.png" style="width:100%">
+          <br><br>
+          <p>
+            We will call the <code>openat</code> function (which underneath will invoke the <i>openat</i> syscall). Will set the <code>file_path</code>
+            to <i>/etc/passwd</i>, the <code>flags</code> to <i>O_RDONLY</i> and <code>dir_fd</code> to <b>1</b>. And voilà, we are able to read 
+            the contents of <code>file_path</code> although the specified file does not belong to the <code>rootfs</code>. 
+          </p>
+          <p style="font-size:155%">
+            #🆂🅰🅽🅳🅱🅾🆇🅴🆂🅲🅰🅿🅴 💣
+          </p>
+        </div>
+        <div class="col-lg-6">
+          <img src="assets/img/rwctf11.png" style="width:100%">
+        </div>
+      </div>  
+      <p>
+        Okay now, we've proven our hypothesis. We have the great ability to read and write into files we have permission to. What would
+        be a responssible way of using it?
+      </p>
+      <h4>
+        👉 <code>/proc/self/maps</code>
+      </h4>
+      <p>
+        What is this file you might ask? Oh well, let's have a look at it:
+      </p>
+      <center><img src="assets/img/rwctf12.png" style="width:70%"></center>
+      <br>
+      <p>
+        As we can see, each row basically describes a region of contiguous virtual memory of the current process (in my case /bin/sh). We can see the <code>address</code> (the starting and ending
+        address of the region in the process's address space). The <code>permissions</code> (this describes how pages in the region can be accessed - r/w/x). <code>offset</code>, <code>inode</code>,
+         <code>pathname</code> (if the region was mapped from a file, this is the name of the file, otherwise, the name of some special regions like heap/stack/vvar/vdso).
+        Let's try reading this file through our exploit: 
+      </p>
+      <center><img src="assets/img/rwctf13.png" style="width:70%"></center>
+      <br>
+      <p>Alright, dope! What next tho? Well, now that we know where the python binary is located, and where the executable region is <code>0x00423000</code>, all we have to do is to overwrite part of it with a shellcode that will 
+        spawn a shell 🙂
+      </p>
+      <p>
+        How are we gonna do that?  
+      </p>
+      <h4>
+        👉 <code>/proc/self/mem</code>
+      </h4>
+      <p> 
+        "This file can be used to access the pages of a process's memory through open(2), read(2), and lseek(2)." <br>
+        This is a very popular and powerful trick to bypass write protections for memory pages. 
+        What exactly should we look to overwrite in this case? The options are endless, but I decided that it would be very easy
+        to simply overwrite the PLT trampoline located at offset <code>+0x20</code> . Let's put this all together:
+      </p>
+      <div class="row">
+        <div class="col-lg-6">
+          <img src="assets/img/rwctf14.png" style="width:100%">
+        </div>
+        <div class="col-lg-6">
+          <img src="assets/img/rwctf15.png" style="width:100%">
+          <br><br>
+          <p>
+            Link to the exploit: <a href="https://github.com/Fineas/Me-CTF/blob/master/Writeups/22-rwctf/exploit.c">https://github.com/Fineas/Me-CTF/blob/master/Writeups/22-rwctf/exploit.c</a>
+          </p>
+        </div>
+      </div>  
+      <h1><span style="color:rgb(217, 28, 36); font-size: 95%">
+        rwctf{s0-many-vu1n_but-only-few-exploitable}🥳
+      </span></h1>
+
+      <br>
+      <h1><i class="fas fa-stamp"></i><span>&lt;CONCLUSION&gt;</span></h1>
+         <p>
+           I believe this was a very nice challenge. The exploitation process was not hard at all, it just involved a bit of creativity,
+           however, finding the vulnerability was a bit of a challenge.
+         </p>
+         <p>
+           Meanwhile, the vulnerability has been patched: <a href="https://github.com/qilingframework/qiling/commit/6d0fc4a81880abc2984552ccd23497d8832d00fe">https://github.com/qilingframework/qiling/commit/6d0fc4a81880abc2984552ccd23497d8832d00fe</a>
+         </p>
+         <p>
+           A fun fact about the CTF is that for every solved challenge, they rewarded the team with a token specific to the category: <a href="https://opensea.io/FetchDEX">see Profile</a>
+         </p>
+         <center><img src="assets/img/rwctf16.png" style="width:70%"></center> <br>
+         <p>
+           Until next time 👋
+         </p>
+      <br>
+      <h1><i class="fas fa-apple-alt"></i><span>&lt;RESOURCES&gt;</span></h1>
+      <ul>
+        <li><a href="https://blog.y011d4.com/20220123-realworldctf-writeup/">https://blog.y011d4.com/20220123-realworldctf-writeup/</a> 👈 my teammate's writeups for RWCTF</li>
+        <li><a href="https://github.com/qilingframework/qiling/commit/bba26a53b5b11f643d0ecb11cb2812f69c2d88d8">Qiling Framework</a></li>
+        <li><a href="https://blog.cloudflare.com/diving-into-proc-pid-mem/">https://blog.cloudflare.com/diving-into-proc-pid-mem/</a></li>
+        <li><a href="https://realworldctf.com/">https://realworldctf.com/</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>
