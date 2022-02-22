@@ -1,0 +1,71 @@
+@font-face {
+    font-family: 'OCRAbyBT';
+    src: url('../font/OCRAN.ea7c361.TTF') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+     url('../font/OCRAN.ea7c361.TTF') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+  } 
+
+body {
+    background-color: #000 !important;
+    background-size:  cover;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    font-family: Courier;
+}
+
+.menu_btns {
+    color: black !important;
+}
+.menu_btns:hover{
+    color: black !important;
+}
+
+h5{
+    color: rgb(255, 255, 255) !important;
+}
+
+h1{
+    font-family: 'OCRAbyBT' !important;
+    color: #00cae5;
+}
+
+a{
+    color: #f8b62b !important; 
+}
+
+.navbar-nav a{
+    color: #00cae5 !important;
+    font-family: 'OCRAbyBT' !important;
+    font-weight: bold;
+}
+a:hover{
+    color: #f8b62b !important;
+    font-weight: bold;
+}
+
+code{
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+}
+
+pre code {
+    white-space: pre;
+}
+
+.image_frame{
+    border: 2px solid black;
+    margin-top: 1%;
+    margin-bottom: 1.5%;
+    box-shadow: 10px 10px 5px #ccc;
+      -moz-box-shadow: 10px 10px 5px #ccc;
+      -webkit-box-shadow: 10px 10px 5px #ccc;
+      -khtml-box-shadow: 10px 10px 5px #ccc;
+    font-size: 70% !important;
+}

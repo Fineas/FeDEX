@@ -70,7 +70,7 @@
       <p>
         But anyway, this year, together with my teammates from <a href="http://wrecktheline.com/">WreckTheLine</a> we managed to finish the CTF on #5 which is an incredible performance and great team effort. Really Proud.
       </p>
-      <center><img src="assets/img/rwctf7.png"></center><br>
+      <center><img src="assets/img/rwctf7.PNG"></center><br>
       <p>Enough with the introduction now, let's dive into this amazing challenge...</p>
       <!-- EXPLORATION -->
       <h1><i class="fas fa-code-branch"></i> <span>&lt;SETUP & RECON&gt;</span></h1>
@@ -89,7 +89,7 @@
       </p>
       <div class="row">
         <div class="col-lg-6">
-          <img src="assets/img/rwctf5.png">
+          <img src="assets/img/rwctf5.PNG">
         </div>
         <div class="col-lg-6">
           The program is asking us to provide a binary <code>b64</code> encoded. Then, it will proceed to create a temporary directory
@@ -106,7 +106,7 @@
           It turns out that the Qiling constructor is expecting a binary to emulate and a <code>rootfs</code> (sandbox). But then, how will it know what type of 
           binary we've provided? Let's check that in the <a href="https://github.com/qilingframework/qiling/blob/master/qiling/core.py">source code</a>. 
         </p>
-        <center><img src="assets/img/rwctf6.png"></center><br>
+        <center><img src="assets/img/rwctf6.PNG"></center><br>
         <p>
           First, it will look for certain file extensions, if they are not provided as part of the filename, then it will look for file signatures (ex. <code>\x7fELF</code>) and determin
           the operating system from that. Great, now we know, that we're allowed to work with any binary from the supported list since no specific <code>ostype</code> is passed to <code>Qiling</code>. 
@@ -130,7 +130,7 @@
       </p>
       <div class="row">
         <div class="col-lg-6">
-          <img src="assets/img/rwctf8.png" style="width:100%">
+          <img src="assets/img/rwctf8.PNG" style="width:100%">
         </div>
         <div class="col-lg-6">
           <code>openat</code> is a systemcall that "operates in exactly the same way as <b>open(2)</b>" except for a few differences:
@@ -154,7 +154,7 @@
           </p>
         </div>
       </div>
-      <center><img src="assets/img/rwctf9.png" style="width:70%"></center><br>
+      <center><img src="assets/img/rwctf9.PNG" style="width:70%"></center><br>
       <p>
         Inside the <code>open_ql_file</code> function, there is a check on the parameter <code>path</code> (file_path)
         to see if it has_mapping, that basically means if the file is already opened. On contrary, the functions checks if <code>dir_fd</code> parameter is set (not null)
@@ -173,7 +173,7 @@
       </p>
       <div class="row">
         <div class="col-lg-6">
-          <img src="assets/img/rwctf10.png" style="width:100%">
+          <img src="assets/img/rwctf10.PNG" style="width:100%">
           <br><br>
           <p>
             We will call the <code>openat</code> function (which underneath will invoke the <i>openat</i> syscall). Will set the <code>file_path</code>
@@ -185,7 +185,7 @@
           </p>
         </div>
         <div class="col-lg-6">
-          <img src="assets/img/rwctf11.png" style="width:100%">
+          <img src="assets/img/rwctf11.PNG" style="width:100%">
         </div>
       </div>  
       <p>
@@ -198,7 +198,7 @@
       <p>
         What is this file you might ask? Oh well, let's have a look at it:
       </p>
-      <center><img src="assets/img/rwctf12.png" style="width:70%"></center>
+      <center><img src="assets/img/rwctf12.PNG" style="width:70%"></center>
       <br>
       <p>
         As we can see, each row basically describes a region of contiguous virtual memory of the current process (in my case /bin/sh). We can see the <code>address</code> (the starting and ending
@@ -206,7 +206,7 @@
          <code>pathname</code> (if the region was mapped from a file, this is the name of the file, otherwise, the name of some special regions like heap/stack/vvar/vdso).
         Let's try reading this file through our exploit: 
       </p>
-      <center><img src="assets/img/rwctf13.png" style="width:70%"></center>
+      <center><img src="assets/img/rwctf13.PNG" style="width:70%"></center>
       <br>
       <p>Alright, dope! What next tho? Well, now that we know where the python binary is located, and where the executable region is <code>0x00423000</code>, all we have to do is to overwrite part of it with a shellcode that will 
         spawn a shell 🙂
@@ -225,10 +225,10 @@
       </p>
       <div class="row">
         <div class="col-lg-6">
-          <img src="assets/img/rwctf14.png" style="width:100%">
+          <img src="assets/img/rwctf14.PNG" style="width:100%">
         </div>
         <div class="col-lg-6">
-          <img src="assets/img/rwctf15.png" style="width:100%">
+          <img src="assets/img/rwctf15.PNG" style="width:100%">
           <br><br>
           <p>
             Link to the exploit: <a href="https://github.com/Fineas/Me-CTF/blob/master/Writeups/22-rwctf/exploit.c">https://github.com/Fineas/Me-CTF/blob/master/Writeups/22-rwctf/exploit.c</a>
@@ -251,7 +251,7 @@
          <p>
            A fun fact about the CTF is that for every solved challenge, they rewarded the team with a token specific to the category: <a href="https://opensea.io/FetchDEX">see Profile</a>
          </p>
-         <center><img src="assets/img/rwctf16.png" style="width:70%"></center> <br>
+         <center><img src="assets/img/rwctf16.PNG" style="width:70%"></center> <br>
          <p>
            Until next time 👋
          </p>
