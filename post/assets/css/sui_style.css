@@ -17,13 +17,14 @@ h1 {
     color: #3998ec !important;
 }
 
-.text--hero-large-159px {
+.text--h1-120px {
     letter-spacing: -.06em;
-    margin-bottom: 50px;
     font-family: Inter, sans-serif;
-    font-size: 159px;
+    font-size: 200%;
     font-weight: 500;
-    line-height: 159px;
+    text-align: center;
+    line-height: 111px;
+    padding: 60px 0px;
 }
 
 .container-wrapper {
@@ -121,3 +122,17 @@ code {
     margin-right: 2px;
     margin-left: 2px;
 }
+
+@media (max-width: 992px) {
+    .text--h1-120px {
+        padding: 40px 0px;
+    }
+
+    body {
+        text-align: center !important;
+    }
+
+    h1 {
+        margin: 50px auto 0px auto;
+    }
+  }
