@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>FeDEX - website</title>
+
+    <link rel="stylesheet" href="../css/bootstrap4-neon-glow.min.css">    
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel='stylesheet' href='assets/css/hack.min.css'>
+    <link rel="stylesheet" href="../css/bootstrap4-neon-glow.css">
+    <link rel="stylesheet" href="assets/css/sui_style.css">
+    <script data-name="BMC-Widget" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="FetchDEX" data-description="Support me on Buy me a coffee!" data-message="Thank you for visiting. You can now buy me a coffee!" data-color="#79D6B5" data-position="" data-x_margin="10" data-y_margin="30"></script>
+  
+    
+  </head>
+  <body>
+
+  <div class="navbar-dark text-white">
+    <div class="container">
+      <nav class="navbar px-0 navbar-expand-lg navbar-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a href="../index.html" class="pl-md-0 p-3" style="color: #92a3b1;">HOME</a>
+            <a href="../blog.html" class="p-3" style="color: #92a3b1;">BLOG</a>
+            <a href="../about.html" class="p-3" style="color: #92a3b1;">ABOUT</a>
+          </div>
+        </div>
+      </nav>
+
+    </div>
+  </div>
+
+
+  
+<div class="container py-5 mb5">
+
+  <!-- POST TITLE -->
+  
+  <div class="row py-4">
+    <!-- POST info -->
+    <div class="col-lg-12 col-md-12 col-sm-12 mb-8" style="padding-left: 0px; padding-right: 0px;">
+      <center>
+        <div class="container container--bkg roundbkg w-container">
+          <img src="https://assets-global.website-files.com/6425f546844727ce5fb9e5ab/64376ae5d96a225c665b144b_01_Research_Hero.png" loading="lazy" style="border-radius: 20px" sizes="(max-width: 991px) 100vw, (max-width: 1279px) 98vw, (max-width: 1447px) 95vw, 1375px" srcset="https://assets-global.website-files.com/6425f546844727ce5fb9e5ab/64376ae5d96a225c665b144b_01_Research_Hero-p-500.png 500w, https://assets-global.website-files.com/6425f546844727ce5fb9e5ab/64376ae5d96a225c665b144b_01_Research_Hero-p-800.png 800w, https://assets-global.website-files.com/6425f546844727ce5fb9e5ab/64376ae5d96a225c665b144b_01_Research_Hero-p-1080.png 1080w, https://assets-global.website-files.com/6425f546844727ce5fb9e5ab/64376ae5d96a225c665b144b_01_Research_Hero.png 1375w" alt="" class="background-video">
+          <div class="container-wrapper">
+            <div class="hero-a--content">
+              <div>
+                <div data-w-id="b899b884-fc5c-376f-74d4-74ebbd6f83ff" class="text--h1-120px anim---slide-up-fade-in" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;">
+            <span class="text--h1-120px">
+              Building & Running a CTF Challenge 
+            </span>
+            <br>
+            <span class="text--h1-120px text--blue">
+              On The Sui Blockchain
+            </span>
+          </div>
+        </div>
+        </div></div></div></div>
+      </center>
+      <br>
+      <!-- INTRODUCTION -->
+      <div>
+        <h1 style="margin-top:50px;"><i class="fas fa-info-circle"></i><span>Introduction</span></h1>
+        <p>
+          Excited by the opportunity to host a one-of-a-kind CTF at the <a href="https://blog.sui.io/denver-sui-builder-house-recap/">Denver Sui Builder House</a>, 
+          together with my colleagues from <a href="https://osec.io/">OtterSec</a> we created a framework that makes crafting CTF challenges a breeze. 
+          In the upcoming article, we'll take a deep dive into the world of the Sui blockchain, explore its mechanics, 
+          and discover how we can leverage specific features to build and run CTF challenges.
+          Without further ado, let's buckle up and get started!
+        </p>
+        <div class="row">
+          <div class="col-lg-6 col-sm-12">
+            <blockquote class="twitter-tweet" data-dnt="true" data-theme="dark"><p lang="en" dir="ltr">OtterSec and Sui Foundation announce the SuiTF Challenge for Denver <a href="https://twitter.com/hashtag/SuiBuilderHouse?src=hash&amp;ref_src=twsrc%5Etfw">#SuiBuilderHouse</a> attendees! <a href="https://t.co/ONT4oXOWgx">pic.twitter.com/ONT4oXOWgx</a></p>&mdash; OtterSec (@osec_io) <a href="https://twitter.com/osec_io/status/1630672087504543746?ref_src=twsrc%5Etfw">February 28, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          </div> 
+          <div class="col-lg-6 col-sm-12"> 
+            <blockquote class="twitter-tweet" data-conversation="none" data-dnt="true" data-theme="dark"><p lang="en" dir="ltr">Below are the links to participate along with the prizes! <br>Winners will be KYC’d to ensure they have attended the Denver Builder House. <br>Good luck! <a href="https://t.co/57CPljmuSS">pic.twitter.com/57CPljmuSS</a></p>&mdash; OtterSec (@osec_io) <a href="https://twitter.com/osec_io/status/1630672096400662538?ref_src=twsrc%5Etfw">February 28, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          </div>
+        </div>
+      </div>
+      <!-- SUI INTRODUCTION -->
+      <h1 style="margin-top:25px;"><span>SUI who?</span></h1>
+      <p>
+        If you are new to the world of blockchain, chances are that the word "SUI" doesn't sound familiar, but for those in the loop, it's a term that has been making quite a buzz lately. 
+        But anyway, <a href="https://www.youtube.com/watch?v=drnBMAEA3AM&ab_channel=Rodgers%26Hammerstein">let's start at the very beginning...</a>
+        <br>
+        <b>SUI</b> (pronounced <i>"swee"</i>) is a Layer-1 proof-of-stake blockchain with smart contract capabilities. 
+        The project is the brainchild of the Mysten Labs team - a company founded by former employees of Meta (Facebook), who also contributed to the Libra Project.
+        <br><br>
+        <a href="https://sui.io/">SUI</a> operates in epochs (1 epoch = 24 hours). 
+        Each epoch is managed by a committee of validators, and this committee changes from one epoch to another. 
+        This setup facilitates the delegation of stakes to validators, which helps strengthen voting power and earn a share of the fees.
+        Now, all validators are, of course, orchestrated by a Consensus Engine, which in this case is <code>Bullshark</code> + <code>Narwhal</code> as the mempool. 
+        For a more detailed explanation, I recommend referring to the <a href="https://docs.sui.io/learn/architecture/consensus">official documentation</a>. 
+        <div class="row">
+          <div class="col-lg-4 col-md-4">
+            <img src="assets/img/epochs.jpeg" width="90%">
+          </div>
+          <div class="col-lg-8 col-md-8">
+            <img src="assets/img/validators.jpeg" width="100%">
+          </div>
+        </div>
+        <br><br>
+        So, with this skeletal system in place, let's now shift our focus to the cardiovascular system of the network - transactions.
+        Every update, communication, or transmission takes place through a transaction. 
+        The information that can be transmitted through a transaction includes the <code>sender's address</code> , <code>gas input</code> , <code>gas price</code> , <code>maximum gas budget</code> , <code>epoch</code> , <code>type + associated data</code> , <code>authenticator</code> , and <code>expiration</code>
+        <div class="row">
+          <div class="col-lg-12">
+            <img src="assets/img/transaction.jpeg" width="100%" style="margin-top:2%">
+          </div>
+        </div>
+        <br>
+        The lifeblood of this network, that we call a transaction, can take various forms, from smart contract calls to native transactions (token transfers, etc).
+        <br><br>
+        And finally, what catches the eye is the muscular system, which represents the objects. 
+        In SUI, the term "object" is used as a unit of storage measurement. 
+        In contrast to other blockchains where storage is structured around accounts, SUI's storage is structured around objects: 
+        <br><br>
+        <ul>
+          <li><b>Move Module</b> (smart contract) - is an object</li>
+          <li><b>Move Object</b> (NFT) - is an object as well</li>
+        </ul>
+        Every object has an owner field, indicating who owns it, and this ownership model also dictates how it can be used in a transaction. 
+        There are 4 types of ownership: 
+        <br><br>
+        <ul>
+          <li><b>Owned by an address</b></li>
+          <li><b>Owned by another object</b></li>
+          <li><b>Immutable</b> (global read-only - e.g., SUI move packages)</li>
+          <li><b>Shared</b> (anyone can read or write)</li>
+        </ul>
+      </p>
+      <ln>
+
+      <!-- MOVE INTRODUCTION -->
+      <h1 style="margin-top:28px;"><span>MOVE where?</span></h1>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <img src="assets/img/move.jpeg" width="100%" style="border: 1px solid #91a3b1; border-radius: 20px;">
+        </div>
+        <div class="col-lg-6 col-sm-12">
+          <p>
+            Alright, now that we have a general idea about this blockchain, it's time to address the elephant in the room - who is <b>MOVE</b>? 
+            <br>
+            <a href="https://github.com/move-language/move">MOVE</a> is the programming language used to create smart contracts. It also traces its roots back to the offices of Meta, but for SUI specifically, there have been a few modifications:
+            <ul>
+              <li>Objects have a global, unique ID</li>
+              <li>Object-centric global storage</li>
+              <li>Entry points accept object references as inputs</li>
+              <li>Addresses represent object IDs</li>
+            </ul>
+            We won't dive into the MOVE syntax or other specific details here, as that information can be found in this repository already:
+            <br><br>
+            <div class="github-card" data-github="MystenLabs/awesome-move" data-width="400" data-height="" data-theme="default"></div>
+            <script>
+              (function(e){var t="https://cdn.jsdelivr.net/github-cards/1.0.2/";var r,i=0;var a=e.getElementsByTagName("meta");var n,d,l,c;for(r=0;r<a.length;r++){var s=a[r].getAttribute("name");var f=a[r].getAttribute("content");if(s==="gc:url"){n=f}else if(s==="gc:base"){t=f}else if(s==="gc:client-id"){d=f}else if(s==="gc:client-secret"){l=f}else if(s==="gc:theme"){c=f}}function u(t){if(e.querySelectorAll){return e.querySelectorAll("."+t)}var i=e.getElementsByTagName("div");var a=[];for(r=0;r<i.length;r++){if(~i[r].className.split(" ").indexOf(t)){a.push(i[r])}}return a}function g(e,t){return e.getAttribute("data-"+t)}function h(e){if(window.addEventListener){window.addEventListener("message",function(t){if(e.id===t.data.sender){e.height=t.data.height}},false)}}function v(r,a){a=a||n;if(!a){var s=g(r,"theme")||c||"default";a=t+"cards/"+s+".html"}var f=g(r,"user");var u=g(r,"repo");var v=g(r,"github");if(v){v=v.split("/");if(v.length&&!f){f=v[0];u=u||v[1]}}if(!f){return}i+=1;var o=g(r,"width");var m=g(r,"height");var b=g(r,"target");var w=g(r,"client-id")||d;var p=g(r,"client-secret")||l;var A="ghcard-"+f+"-"+i;var y=e.createElement("iframe");y.setAttribute("id",A);y.setAttribute("frameborder",0);y.setAttribute("scrolling",0);y.setAttribute("allowtransparency",true);var E=a+"?user="+f+"&identity="+A;if(u){E+="&repo="+u}if(b){E+="&target="+b}if(w&&p){E+="&client_id="+w+"&client_secret="+p}y.src=E;y.width=o||Math.min(r.parentNode.clientWidth||400,400);if(m){y.height=m}h(y);r.parentNode.replaceChild(y,r);return y}var o=u("github-card");for(r=0;r<o.length;r++){v(o[r])}if(window.githubCard){window.githubCard.render=v}})(document);
+            </script>
+          </p>
+        </div> 
+      </div>
+
+      <!-- ADAPTER -->
+      <h1 style="margin-top:20px;"><span>SuiTestAdapter</span></h1>
+      <p>
+        When you're just getting started with Sui, one of the first things you do is download <a href="https://github.com/MystenLabs/sui/releases">sui-cli</a> (Sui Command Line Interface). 
+        This tool enables you to perform a variety of operations, for example:
+        <ul>
+          <li>
+            Creat new Account
+            <br>
+            <code>
+              sui client new-address ed25519
+            </code>
+          </li>
+          <li>
+            Create new Move Module
+            <br>
+            <code>
+              sui move new demo_package
+            </code>
+          </li>
+          <li>
+            Compile Move Module
+            <br>
+            <code>
+              sui move build
+            </code>
+          </li>
+          <li>
+            Publish Move Module
+            <br>
+            <code>
+              sui client publish $PATH_TO_PACKAGE/demo_package --gas 0x1337 --gas-budget 30000
+            </code>
+          </li>
+          <li>
+            Call Entry Functions
+            <br>
+            <code>
+              sui client call --function function_name --module sui --package 0x31337 --args $OBJECT_ID "[1, 3, 3, 7]" --gas-budget 30000
+            </code>
+          </li>
+          <li>
+            Run Local Network
+            <br>
+            <code>
+              sui start
+            </code>
+          </li>
+          <li>
+            Execute various Validator Operations
+            <br>
+            <code>
+              sui client call --package 0x2 --module sui_system --function request_remove_validator --args 0x5 --gas-budget 10000
+            </code>
+          </li>
+          <li>
+            View Objects an Address Owns
+            <br>
+            <code>
+              sui client objects
+            </code>
+          </li>
+          <li>
+            Test Module Module
+            <br>
+            <code>
+              sui move test
+            </code>
+          </li>
+        </ul>
+      </p>
+      <p>
+        One operation that is particularly interesting is the testing operation. Tests are designed to help programmers test a specific functionality of the program. There are three annotations
+        to the Move source language: <code>#[test]</code> <code>#[test_only]</code> <code>#[expected_failure]</code>. 
+      </p>
+      <p>However, unit tests do not support certain features that programmers may wish to test (e.g. there is no way in Move unit tests to query if a specific event has been emitted) and that is because
+        unit tests don't use an <b>Adapter</b>.
+      </p>
+      <p>
+        Because of that, the <b>Expected Value Tests</b> framework was created, it helps with writing tests that need to check for events, and expect specific states:
+      </p>
+      <div class="row">
+        <div class="col-lg-5">
+          <img src="assets/img/test_expect.jpeg" width="100%" style="border: 1px solid #91a3b1; border-radius: 20px;">
+        </div>
+        <div class="col-lg-7">
+          <img src="assets/img/expect.jpeg" width="100%" style="border: 1px solid #91a3b1; border-radius: 20px;">
+        </div>
+      </div>
+      <br>
+      <p>
+        Alright, now let's now open Pandora's box, and for that, we'll direct our attention to <a href="https://github.com/MystenLabs/sui/tree/main/crates/sui-transactional-test-runner/src">sui/crates/sui-transactional-test-runner/src</a>.
+        <br> 
+        This is a library that implements a <code>SuiTestAdapter</code>, which is later sent to <a href="https://github.com/MystenLabs/sui/blob/main/external-crates/move/testing-infra/transactional-test-runner/src/framework.rs#L665">move/testing-infra/transactional-test-runner/src/framework.rs</a> along with a source file. 
+        The <code>run_test_impl</code> function handles parsing the source program and extracting tasks delimited by the <code>//#</code> identifier. Once the tasks are extracted, they are <a href="https://github.com/MystenLabs/sui/blob/main/external-crates/move/testing-infra/transactional-test-runner/src/framework.rs#L722">executed in order</a>.
+        <br> 
+        
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <img src="assets/img/tasks.jpeg" width="100%" style="border: 1px solid #91a3b1; border-radius: 20px;">
+          </div>
+        
+          <div class="col-lg-6 col-md-12">
+            The predefined tasks are:
+            <ul>
+              <li><b>Init</b></li>
+              <li><b>PrintBytecode</b></li>
+              <li><b>Publish</b></li>
+              <li><b>Run</b></li>
+              <li><b>View</b></li>
+              <li><b>Subcommand</b></li>
+            </ul> 
+            <p> They are handled in the handle_command function.</p>
+            <p>
+              Quite interesting, isn't it? 
+            </p>
+            <p>
+              Essentially, this adapter provides access to all the primary functionalities required for running and interacting with a smart contract.
+            </p>
+            <p>
+              Why don't we try to harness its potential and transform it into a CTF framework instead of just a simple Test framework?
+            </p>
+          </div>
+        </div>
+      </p>
+      <br>
+
+      <!-- SUI CTF FRAMEWORK -->
+      <h1 style="margin-top:25px;"><span>sui-ctf-framework</span></h1>
+      <p>
+        Spoiler alert, that's exactly what we did! <a href="https://github.com/otter-sec/sui-ctf-framework/blob/main/src/lib.rs">https://github.com/otter-sec/sui-ctf-framework/blob/main/src/lib.rs</a> 🤭
+      </p>
+      <p>
+        Using only 4 of the predefined tasks, we created a lightweight framework, which creates a <code>SuiTestAdapter</code> object along with an arbitrary number of <b>accounts</b>.
+        Once the adapter is created, we can use it to publish the <b>Challenge</b> smart contract & <b>Solution</b> smart contract under the challenge and solution accounts.
+        With the modules published, we can call any <code>entry public fun</code> from the Solution module which is supposed to solve the challenge. 
+        Lastly, the <code>view_object</code> function allows you to either debug or check if certain objects were altered according to the intended solution.
+      </p>
+      <br>
+
+      <!-- CTF CHALLENGE -->
+      <h1 style="margin-top:25px;"><span>baby_otter</span></h1>
+      <p>
+        Alright, let's cut to the chase and dive into a real challenge. 
+        At <a href="https://ctftime.org/event/1930">justCTF 2023</a>, an online Jeopardy-style CTF where OtterSec served as one of the sponsors, participants were faced with a sui challenge called <i>"baby_otter</i>. 
+        This particular challenge provides a prime illustration of how the <code>sui-ctf-framework</code> seamlessly integrates with a CTF scenario. <small> <a href="https://s3.cdn.justctf.team/87533a8d-8827-42c9-9077-95aee13add51/baby_otter.zip"><b>challenge source</b></a> </small>
+
+        <div class="row">
+          <div class="col-lg-5 col-md-7">
+            <img src="assets/img/baby_otter.jpeg" width="100%">
+          </div>
+          <div class="col-lg-3 col-md-5">
+            <img src="assets/img/tree.jpeg" width="100%">
+          </div>
+          <div class="col-lg-4 col-md-12">
+            <p>
+              A quick glance at the source code of this problem reveals two main components: a <b>Server</b> and a <b>Client</b>. 
+              The server can be found in the <code>framework</code> folder, while the client resides in the <code>framework-solve</code> folder. 
+              <br><br>
+              Both the server and the client are <u>Rust applications</u>, so their source code can be found in the <code>src</code> subfolder. 
+              <br><br>
+              Let's analyze them one by one.
+            </p>
+          </div>
+        </div>
+        <br>
+        <ul>
+          <li>
+          The <b>Server</b> opens a socket on port 31337 and waits for a connection to be established. 
+          Once established, the execution is directed to the 'handle_client' function. 
+            <ol>
+              <li>Right from the start, we can see that two <code>named_addresses</code> (<b>challenge</b> and <b>solution</b>) and two <code>addresses</code> (<b>challenger</b> and <b>solver</b>) are initialized, followed by a call to the <code>sui_ctf_framework::initialize</code> function, which returns an <code>adapter</code>.</li>
+              <li>
+                The next step performed by the server is to <code>publish</code> the <b>challenge</b> smart contract as <code>bytecode</code> (CompiledModule). 
+                It then waits for the connected client to send the compiled bytecode of the <b>solution</b> smart contract, which will be published as well.
+              </li>
+              <li>The third step, after publishing both contracts under the addresses <b>challenger</b> and <b>solver</b>, is for the server to invoke the <code>sui_ctf_framework::call_function</code> function, thus calling the public function <code>solve</code> of the solution contract <code>baby_otter_solution</code>.</li>
+              <li>
+                The last step in the server's source code is to call the <code>is_owner</code> function of the <code>baby_otter_challenge</code> smart contract. 
+                If it doesn't return an error, it means the task has been solved, and the <b>flag</b> will be sent to the client
+              </li>
+            </ol> 
+          </li>
+          <li>
+            The <b>Client</b> attempts to connect to an <b>IP</b> address and <b>Port</b>, and then proceeds with the following steps:
+              <ol>
+                <li>It reads the compiled module <code>baby_otter_solution.mv</code> and sends it to the server.</li>
+                <li>Waits for a response from the server (hoping it's the flag) and prints it.</li>
+              </ol> 
+            </li>
+        </ul>
+        </p> 
+        <p>
+          There you have it, a simple method to run a challenge where the author defines a move module representing the task, 
+          and it's up to the participants to implement a move module representing the solution to the task.
+        </p>
+        <p>
+          Now, since we've come this far, let's briefly see what the challenge module is all about.
+        </p>
+        <p>
+          The file <code>framework/chall/sources/baby_otter_challenge.move</code> defines an <code>init</code> function, which is called during the contract publish operation. 
+          This function publicly exposes an object named <code>Status</code> that holds the challenge status (<b>solved</b> or <b>unsolved</b>).
+          <br><br> 
+          Furthermore, we can observe two peculiar local functions named <code>gt</code> and <code>hh</code>, along with two public entry functions named <code>request_ownership</code> and <code>is_owner</code>.
+          The <code>is_owner</code> function, which we recall from the server source, appears to simply check if <code>Status.solved == true</code>. 
+          <br><br>
+          On the other hand, the <code>request_ownership</code> function takes an input called <code>ownership_code : vector<u8></code>, which is passed to the <code>hh</code> function. 
+          The result of this function is then compared to the value <code>1725720156</code>. If they match, <code>Status.solved</code> will be set to <b>true</b> otherwise, it remains <b>false</b>.
+          <br><br>
+          So the objective of the challenge is to determin a special code which generates the value <code>1725720156</code>
+        </p>
+        <br>
+
+      <!-- SOLUTION -->
+      <h1 style="margin-top:25px;"><span>Solution</span></h1>
+      <p>
+        This can be achieved in three different ways:
+        <ol>
+          <li>
+            <b>The Intended Way:</b> 
+            <br>
+            The goal is for the players to notice that the two suspicious functions actually represent the implementation of the <code>CRC32</code> algorithm. 
+            This realization could have been achieved either through experience and recognizing certain constants that give away the implementation, 
+            or simply by passing these two functions to <code>ChatGPT</code>, which is capable of recognizing the implementation:
+            <br>
+            <img src="assets/img/gpt.jpeg" width="65%" style="border: 1px solid #91a3b1; border-radius: 20px;">
+            <br>
+            After that, the hash could be cracked using an open-source tool such as: <a href="https://github.com/theonlypwner/crc32">https://github.com/theonlypwner/crc32</a> 
+          </li>
+          <br>
+          <li>
+            <b>The Hard Way:</b> 
+            <br>
+            <a href="https://j4x.tech/ctfs/justctf2023_baby_otter/">https://j4x.tech/ctfs/justctf2023_baby_otter/</a>
+          </li>
+          <br>
+          <li>
+            <b>The Cool Way:</b>
+            <br>
+            Before we proceed, if <b>move prover</b> doesn't ring a bell, I kindly ask you to read <a href="https://osec.io/blog/2022-09-16-move-prover">this article</a> written by my colleagues and myself, which will provide you with all the necessary information to understand this method.
+            <br>
+            <details>
+              <summary>spoilers</summary>
+            
+              <div style="border-radius: 20px; border: 1px solid #141414;padding: 5px 12px;">
+                Actually, nevermind, the first reader to solve the challenge using the <code>Move Prover</code> and then send it to <a href="#">fedex@osec.io</a> will receive some cool swag 😎
+              </div>
+            </details>
+          </li>
+        </ol>
+      </p>
+      <br>
+
+      <h1 style="margin-top: 25px;"><span>Closing Thoughts</span></h1>
+      <p>
+        I hope it has been a pleasant read, and that you've learned at least one new thing today. 
+        I got plenty of bookmarked ideas, but unfortunately time doesn't allow me to share them all 
+        <br>
+        Until next time, take care and God bless! 👋
+      </p>
+    </div>
+</div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>

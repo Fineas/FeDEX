@@ -1,0 +1,123 @@
+body {
+    background-color: #f9fdfe !important;
+    color: #111 !important;
+    font-family: Inter, sans-serif !important;
+}
+
+a {
+    color: #91a3b1 !important;
+    text-decoration: none !important; 
+}
+
+a:hover {
+    color: #3998ec !important;
+}
+
+h1 {
+    color: #3998ec !important;
+}
+
+.text--hero-large-159px {
+    letter-spacing: -.06em;
+    margin-bottom: 50px;
+    font-family: Inter, sans-serif;
+    font-size: 159px;
+    font-weight: 500;
+    line-height: 159px;
+}
+
+.container-wrapper {
+    z-index: 1;
+    width: 100%;
+    max-width: 1160px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    position: relative;
+}
+
+.hero-a--content {
+    z-index: 2;
+    max-width: 98%;
+    flex: 1;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.container.container--bkg.roundbkg {
+    position: relative;
+    /* overflow: hidden; */
+}
+
+.w-background-video > video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -100;
+    background-position: 50%;
+    background-size: cover;
+    margin: auto;
+    position: absolute;
+    top: -100%;
+    bottom: -100%;
+    left: -100%;
+    right: -100%;
+}
+
+.background-video {
+    z-index: 1;
+    width: 100%;
+    height: 101%;
+    object-fit: cover;
+    border: 0 solid rgba(0, 0, 0, 0);
+    position: absolute !important;
+    top: 0;
+    left: 0;
+}
+
+.w-background-video > video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -100;
+    background-position: 50%;
+    background-size: cover;
+    margin: auto;
+    position: absolute;
+    top: -100%;
+    bottom: -100%;
+    left: -100%;
+    right: -100%;
+}
+
+.background-video {
+    top: 0;
+    left: 0;
+}
+
+.text--h1-120px {
+    letter-spacing: -.06em;
+    font-family: Inter, sans-serif;
+    font-size: 75px;
+    font-weight: 500;
+    line-height: 111px;
+    padding: 60px;
+}
+
+.text--blue {
+    color: #4ca3ff;
+}
+
+code {
+    font-size: 87.5%;
+    color: white;
+    word-break: break-word;
+    background-color: #4DA2FF;
+    padding: 1px 4px;
+    border-radius: 5px;
+    margin-right: 2px;
+    margin-left: 2px;
+}
